@@ -318,7 +318,7 @@ seat:
 **Seating class factors**
 
 Seating parameters follow
-[IATA RP 1726](https://www.iata.org/contentassets/9ddfef0009544c378236a2d2e1447aab/iata-rp-1726_passenger-co2.pdf).
+[IATA RP 1726](https://www.iata.org/en/programs/environment/passenger-emissions-methodology/).
 An analysis of seat pitch and width in each seating class in typical plane
 configurations confirmed the accuracy of these factors.
 
