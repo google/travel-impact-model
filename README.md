@@ -418,9 +418,9 @@ break down:
 ## Legal base for model data sharing
 
 The carbon emission estimate data will be available via API under the
-[Creative Commons CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) open
-source license
-([legal code](https://creativecommons.org/licenses/by/4.0/legalcode)).
+[Creative Commons Attribution-ShareAlike CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+open source license
+([legal code](https://creativecommons.org/licenses/by-sa/4.0/legalcode)).
 
 ## Versioning
 
