@@ -203,7 +203,7 @@ these short-term emissions, and reported in units of mW/m<sup>2</sup> (global
 average).
 
 The two largest warming contributors for 2018 are contrail-induced cirrus clouds
-and CO<sub>2</sub> from fuel emissions.
+and CO<sub>2</sub> from fuel emissions. Other important ERF components are NO<sub>x</sub>, sulfur and soot emissions, as well as water vapor emissions.
 
 The TIM calculates CO<sub>2</sub>e emissions based on global warming potentials
 over a 100-year horizon — GWP100, an oft-cited metric used by the Kyoto Protocol
