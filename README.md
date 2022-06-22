@@ -79,7 +79,7 @@ example emissions forecast for a B789 aircraft:
    </td>
    <td style="background-color: null"><code>LTO CO<sub>2 </sub>forecast<sub> </sub>(kg)</code>
    </td>
-   <td style="background-color: null"><code>CCD CO<sub>2 
+   <td style="background-color: null"><code>CCD CO<sub>2
 </sub>forecast<sub> </sub>(kg)</code>
    </td>
   </tr>
@@ -191,7 +191,7 @@ Used for flight level emissions:
 Non-CO<sub>2</sub> emissions from aviation are a significant fraction of
 aviation’s net climate effect. As cited by the IPCC’s
 [AR6 report](https://www.ipcc.ch/report/ar6/wg1/#FullReport), Lee et al.
-[[2020](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7468346/)] provides a
+[[2021](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7468346/)] provides a
 comprehensive review of aviation climate emissions, aggregating the results from
 32 published studies.
 
@@ -217,8 +217,8 @@ SLCP emissions can be converted to absolute CO<sub>2</sub>e by calculating the
 CO<sub>2</sub> emission (AGWP100) required to produce the same average radiative
 forcing over a 100 year period. The AGWP100 of CO<sub>2</sub> is roughly
 91mW/m<sup>2</sup> per 1Gt-CO<sub>2</sub>/yr
-[[AR5, Myhre, G. et al](https://www.ipcc.ch/site/assets/uploads/2018/07/WGI_AR5.Chap_.8_SM.pdf)].
-Using numbers from Lee et al (2020) presented in Table 2, the
+[[AR5, Myhre, G. et al.](https://www.ipcc.ch/site/assets/uploads/2018/07/WGI_AR5.Chap_.8_SM.pdf)].
+Using numbers from Lee et al. (2021) presented in Table 2, the
 kg-CO<sub>2</sub>e/km can then be calculated for each non-CO<sub>2</sub> source
 based on ERF, and aviation miles flown:
 
@@ -234,13 +234,13 @@ based on ERF, and aviation miles flown:
 </strong>(mW m−2)<strong> <br/>
 </strong>Median (5th, 95th)
    </td>
-   <td style="background-color: null; text-align: center"><strong>AGWP100 
+   <td style="background-color: null; text-align: center"><strong>AGWP100
 </strong><br/>(metric megatons
-CO2e yr-1)<br/><strong> 
+CO2e yr-1)<br/><strong>
 </strong>Median (5th, 95th)
    </td>
-   <td style="background-color: null; text-align: center"><strong>CO2e per flight km* 
-</strong><br/>(kg-CO2e km-1)<br/><strong> 
+   <td style="background-color: null; text-align: center"><strong>CO2e per flight km*
+</strong><br/>(kg-CO2e km-1)<br/><strong>
 </strong>Median (5th, 95th)
    </td>
   </tr>
