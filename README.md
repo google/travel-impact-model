@@ -1,4 +1,4 @@
-## Travel Impact Model 1.4.0
+## Travel Impact Model 1.5.0
 
 #### (Implementation of the Travalyst Shared Framework by Google)
 
@@ -8,7 +8,6 @@
     * [Flight level emission estimates](#flight-level-emission-estimates)
         * [Flight level CO<sub>2</sub> estimates](#flight-level-co2-estimates)
         * [Data sources](#data-sources)
-    * [From CO<sub>2</sub> to CO<sub>2</sub>e emissions](#from-co2-to-co2e-emissions)
     * [Breakdown from flight level to individual level](#breakdown-from-flight-level-to-individual-level)
         * [Data sources](#data-sources-1)
         * [Factors details](#factors-details)
@@ -186,105 +185,6 @@ Used for flight level emissions:
     ([link](https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation-1/view))
 *   Piano-X aircraft database ([link](https://www.lissys.uk/PianoX.html))
 
-### From CO<sub>2</sub> to CO<sub>2</sub>e emissions
-
-Non-CO<sub>2</sub> emissions from aviation are a significant fraction of
-aviation’s net climate effect. As cited by the IPCC’s
-[AR6 report](https://www.ipcc.ch/report/ar6/wg1/#FullReport), Lee et al.
-[[2020](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7468346/)] provides a
-comprehensive review of aviation climate emissions, aggregating the results from
-32 published studies.
-
-Non-CO<sub>2</sub> emissions are predominantly Short Lived Climate Pollutants
-(SLCPs), which have a shorter residency in the atmosphere and short-term
-Radiative Forcing (RF) effects. Effective Radiative Forcing (ERF) — the net
-warming after assessing immediate feedback effects — is used to characterize
-these short-term emissions, and reported in units of mW/m<sup>2</sup> (global
-average).
-
-The two largest warming contributors for 2018 are contrail-induced cirrus clouds
-and CO<sub>2</sub> from fuel emissions.
-
-The TIM calculates CO<sub>2</sub>e emissions based on global warming potentials
-over a 100-year horizon — GWP100, an oft-cited metric used by the Kyoto Protocol
-[[UNFCCC](https://unfccc.int/process-and-meetings/transparency-and-reporting/methods-for-climate-change-transparency/common-metrics)].
-GWP100 is the ratio of the rate of 100-year CO<sub>2</sub> emissions to
-non-CO<sub>2</sub> emissions that both produce an equal integrated warming
-energy over those 100 years
-[[EPA](https://www.epa.gov/ghgemissions/understanding-global-warming-potentials)].
-
-SLCP emissions can be converted to absolute CO<sub>2</sub>e by calculating the
-CO<sub>2</sub> emission (AGWP100) required to produce the same average radiative
-forcing over a 100 year period. The AGWP100 of CO<sub>2</sub> is roughly
-91mW/m<sup>2</sup> per 1Gt-CO<sub>2</sub>/yr
-[[AR5, Myhre, G. et al](https://www.ipcc.ch/site/assets/uploads/2018/07/WGI_AR5.Chap_.8_SM.pdf)].
-Using numbers from Lee et al (2020) presented in Table 2, the
-kg-CO<sub>2</sub>e/km can then be calculated for each non-CO<sub>2</sub> source
-based on ERF, and aviation miles flown:
-
-<table>
-  <tr>
-   <td colspan="4" style="background-color: null; text-align: center"><strong>2018 Aviation Emissions</strong>
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null; text-align: center"><strong>Source </strong>
-   </td>
-   <td style="background-color: null; text-align: center"><strong>ERF in 2018 <br/>
-</strong>(mW m−2)<strong> <br/>
-</strong>Median (5th, 95th)
-   </td>
-   <td style="background-color: null; text-align: center"><strong>AGWP100 
-</strong><br/>(metric megatons
-CO2e yr-1)<br/><strong> 
-</strong>Median (5th, 95th)
-   </td>
-   <td style="background-color: null; text-align: center"><strong>CO2e per flight km* 
-</strong><br/>(kg-CO2e km-1)<br/><strong> 
-</strong>Median (5th, 95th)
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: #cccccc"><strong>Contrail cirrus</strong>
-   </td>
-   <td style="background-color: #cccccc"><p style="text-align: right">
-57.4 (17, 98)</p>
-
-   </td>
-   <td style="background-color: #cccccc"><p style="text-align: right">
-629 (186, 1075)</p>
-
-   </td>
-   <td style="background-color: #cccccc"><p style="text-align: right">
-10.3 (3.0, 17.5)</p>
-
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: #f3f3f3"><strong>CO2</strong>
-   </td>
-   <td style="background-color: #f3f3f3"><p style="text-align: right">
-34.3 (28, 40)</p>
-
-   </td>
-   <td style="background-color: #f3f3f3"><p style="text-align: right">
-1034</p>
-
-   </td>
-   <td style="background-color: #f3f3f3"><p style="text-align: right">
-16.9</p>
-
-   </td>
-  </tr>
-</table>
-
-<p style="text-align: right">
-(Table 2)</p>
-
-*Contrail cirrus is only formed for a fraction of flights. Averaged over all
-flights, contrails contribute an additional estimated **61% (median)** to the
-aviation emissions from CO<sub>2</sub> alone (10.3/16.9 = 0.61).
-
 ### Breakdown from flight level to individual level
 
 In addition to predicting a flight’s emissions, it is possible to estimate the
@@ -386,9 +286,8 @@ To get the total emissions for a flight, let’s follow the process below:
     *   LTO 5.43 metric tons of CO<sub>2</sub>
     *   CCD 166.87 metric tons of CO<sub>2</sub> calculated
         *   165.0 + (5058.9 - 5000) \* (180.9 -165.0) / (5500 - 5000)
-3.  Sum LTO and CCD number multiplied with non-CO<sub>2</sub> factor 1.61 for
-    total flight level result:
-    *   (166.87 \* 1.61) + 5.43 = 274.09 metric tons of CO<sub>2</sub>e
+3.  Sum LTO and CCD number for total flight level result:
+    *   166.87 + 5.43 = 172.3 metric tons of CO<sub>2</sub>
 
 Once the total flight emissions are computed, let’s compute the per passenger
 break down:
@@ -400,20 +299,20 @@ break down:
     C = first\_class\_seats \* first\_class\_multiplier + business\_class\_seats
     \* business\_class\_multiplier + …
     *   In this specific example, the estimated area is: \
-        0 \* 5 + 48 \* 4 + 1.5 \* 21 + 188 \* 1 =411.5
-3.  Divide the total CO<sub>2</sub>e emissions by the equivalent capacity
-    calculated above to get the of CO<sub>2</sub>e emissions per-economy
-    passenger: 274.09 t CO<sub>2</sub>e/411.5 = 666.08 kg CO<sub>2</sub>e
+        0 \* 5 + 48 \* 4 + 1.5 \* 21 + 188 \* 1 = 411.5
+3.  Divide the total CO<sub>2</sub> emissions by the equivalent capacity
+    calculated above to get the of CO<sub>2</sub> emissions per-economy
+    passenger: 172.3 t CO<sub>2</sub>/411.5 = 418.71 kg CO<sub>2</sub>
 4.  Emissions per-passenger for other cabins can be derived by multiplying for
     the corresponding cabin factor.
-    *   Business: 666.08 \* 4 = 2664.32 kg CO<sub>2</sub>e
-    *   Premium Economy: 666.08 \* 1.5 = 999.12 kg CO<sub>2</sub>e
-    *   Economy = 666.08kg CO<sub>2</sub>e
+    *   Business: 418.71 \* 4 = 1674.85 kg CO<sub>2</sub>
+    *   Premium Economy: 418.71 \* 1.5 = 628.06 kg CO<sub>2</sub>
+    *   Economy = 418.71kg CO<sub>2</sub>
 5.  Scale to estimated load factor 0.845 by apportioning emissions to occupied
     seats:
-    *   Business: 2664.32 / 0.845 = 3153 kg CO<sub>2</sub>e
-    *   Premium Economy: 999.12 / 0.845 = 1182 kg CO<sub>2</sub>e
-    *   Economy = 666.08 / 0.845 = 788 kg CO<sub>2</sub>e
+    *   Business: 1674.85 / 0.845 = 1982.067 kg CO<sub>2</sub>
+    *   Premium Economy: 628.06 / 0.845 = 743.28 kg CO<sub>2</sub>
+    *   Economy = 418.71 / 0.845 = 495.52 kg CO<sub>2</sub>
 
 ## Legal base for model data sharing
 
@@ -497,9 +396,9 @@ overall dataset are employed.
 
 ## Data quality
 
-The CO<sub>2</sub> part of the estimates (excluding non-CO<sub>2</sub> effects)
-were validated by comparing against a limited amount of real-world fuel burn
-data. The finding was that the TIM is underestimating by 7% on average.
+The CO<sub>2</sub> estimates were validated by comparing against a limited
+amount of real-world fuel burn data. The finding was that the TIM is
+underestimating by 7% on average.
 
 The
 [EEA guidebook](https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation/view)
