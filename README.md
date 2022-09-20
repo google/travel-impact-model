@@ -3,24 +3,25 @@
 #### (Implementation of the Travalyst Shared Framework by Google)
 
 ## Table of contents
-* [Background](#background)
-* [Model overview](#model-overview)
-    * [Flight level emission estimates](#flight-level-emission-estimates)
-        * [Flight level CO<sub>2</sub> estimates](#flight-level-co2-estimates)
-        * [Data sources](#data-sources)
-    * [Breakdown from flight level to individual level](#breakdown-from-flight-level-to-individual-level)
-        * [Data sources](#data-sources-1)
-        * [Factors details](#factors-details)
-        * [Outlier detection and basic correctness checking](#outlier-detection-and-basic-correctness-checking)
-* [Example emission estimation](#example-emission-estimation)
-* [Legal base for model data sharing](#legal-base-for-model-data-sharing)
-* [Versioning](#versioning)
-* [Limitations](#limitations)
-* [Data quality](#data-quality)
-* [Contact](#contact)
-* [Glossary](#glossary)
-* [Appendix](#appendix)
-    * [Appendix A: Aircraft type support](#appendix-a-aircraft-type-support)
+
+*   [Background](#background)
+*   [Model overview](#model-overview)
+    *   [Flight level emission estimates](#flight-level-emission-estimates)
+        *   [Flight level CO<sub>2</sub> estimates](#flight-level-co2-estimates)
+        *   [Data sources](#data-sources)
+    *   [Breakdown from flight level to individual level](#breakdown-from-flight-level-to-individual-level)
+        *   [Data sources](#data-sources-1)
+        *   [Factors details](#factors-details)
+        *   [Outlier detection and basic correctness checking](#outlier-detection-and-basic-correctness-checking)
+*   [Example emission estimation](#example-emission-estimation)
+*   [Legal base for model data sharing](#legal-base-for-model-data-sharing)
+*   [Versioning](#versioning)
+*   [Limitations](#limitations)
+*   [Data quality](#data-quality)
+*   [Contact](#contact)
+*   [Glossary](#glossary)
+*   [Appendix](#appendix)
+    *   [Appendix A: Aircraft type support](#appendix-a-aircraft-type-support)
 
 ## Background
 
@@ -78,7 +79,7 @@ example emissions forecast for a B789 aircraft:
    </td>
    <td style="background-color: null"><code>LTO CO<sub>2 </sub>forecast<sub> </sub>(kg)</code>
    </td>
-   <td style="background-color: null"><code>CCD CO<sub>2 
+   <td style="background-color: null"><code>CCD CO<sub>2
 </sub>forecast<sub> </sub>(kg)</code>
    </td>
   </tr>
@@ -253,10 +254,10 @@ for the aircraft are performed, specifically:
 *   The *calculated total seat area* for a flight is the total available seating
     area. This is calculated based on seating data and seating class factors.
     For example, the total seat area for a wide-body aircraft would be:
-    *   ``1.0 * num_economy_class_seats +``
-        <br/>``1.5 * num_premium_economy_class_seats +``
-        <br/>``4.0 * num_business_class_seats +``
-        <br/>``5.0 * num_first_class_seats``
+    *   `1.0 * num_economy_class_seats +`
+        <br/>`1.5 * num_premium_economy_class_seats +`
+        <br/>`4.0 * num_business_class_seats +`
+        <br/>`5.0 * num_first_class_seats`
 *   The *reference total seat area* for an aircraft is roughly the median total
     seat area.
 *   During a *comparison* step: If the *calculated total seat area* for a given
@@ -413,8 +414,8 @@ We are welcoming feedback and enquiries. Please get in touch using this
 
 ## Glossary
 
-**CCD:** The flight phases _Climb_, _Cruise_, _and_ _Descend_ occur above a flight
-altitude of 3,000 feet.
+**CCD:** The flight phases *Climb*, *Cruise*, *and* *Descend* occur above a
+flight altitude of 3,000 feet.
 
 **CO<sub>2</sub>**: Carbon dioxide is the most significant long-lived greenhouse
 gas in Earth's atmosphere. Since the Industrial Revolution anthropogenic
