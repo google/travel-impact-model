@@ -1,4 +1,4 @@
-## Travel Impact Model 1.5.0
+## Travel Impact Model 1.5.1
 
 #### (Implementation of the Travalyst Shared Framework by Google)
 
@@ -11,8 +11,8 @@
         *   [Data sources](#data-sources)
     *   [Breakdown from flight level to individual level](#breakdown-from-flight-level-to-individual-level)
         *   [Data sources](#data-sources-1)
-        *   [Factors details](#factors-details)
         *   [Outlier detection and basic correctness checking](#outlier-detection-and-basic-correctness-checking)
+        *   [Factors details](#factors-details)
 *   [Example emission estimation](#example-emission-estimation)
 *   [Legal base for model data sharing](#legal-base-for-model-data-sharing)
 *   [Versioning](#versioning)
@@ -213,6 +213,38 @@ Used to determine seating configuration and calculate emissions per available
 seat:
 
 *   Aircraft Configuration/Version (ACV) from published flight schedules
+*   Fleet-level aircraft configuration information from the "Seats (Equipment
+    Configuration) File" provided by [OAG](https://oag.com)
+
+#### Primary fallback for missing seat configuration
+
+If there are no individual seat configuration numbers for a flight available
+from the published flight schedules, we query the fleet-level seating data for a
+unique match by carrier and aircraft. This is only possible in cases where a
+carrier uses the same seating configuration for all their aircraft of a certain
+aircraft model.
+
+#### Outlier detection and basic correctness checking
+
+If there are no individual seat configuration numbers for a flight available
+from the published flight schedules, nor from the fleet-level data, or if they
+are incorrectly formatted or implausible, the TIM uses aircraft-specific medians
+derived from the overall dataset instead. Basic correctness checks based on
+reference seat configurations for the aircraft are performed, specifically:
+
+*   The *calculated total seat area* for a flight is the total available seating
+    area. This is calculated based on seating data and seating class factors.
+    For example, the total seat area for a wide-body aircraft would be:
+    *   `1.0 * num_economy_class_seats +`
+        <br/>`1.5 * num_premium_economy_class_seats +`
+        <br/>`4.0 * num_business_class_seats +`
+        <br/>`5.0 * num_first_class_seats`
+*   The *reference total seat area* for an aircraft is roughly the median total
+    seat area.
+*   During a *comparison* step: If the *calculated total seat area* for a given
+    flight is within certain boundaries of the reference for that aircraft, the
+    filed seating data from published flight schedules is used. Otherwise the
+    *reference total seat area* is used.
 
 #### Factors details
 
@@ -242,28 +274,6 @@ Load factors are derived from a projection of past passenger statistics from
     in June (~89.8%)
     *   Aggregated overall average applied in the model is **84.5%**
 *   Cargo load not included
-
-#### Outlier detection and basic correctness checking
-
-If there are no individual seat configuration numbers for a flight available
-from the published flight schedules, or if they are incorrectly formatted or
-implausible, the TIM uses aircraft-specific medians derived from the overall
-dataset instead. Basic correctness checks based on reference seat configurations
-for the aircraft are performed, specifically:
-
-*   The *calculated total seat area* for a flight is the total available seating
-    area. This is calculated based on seating data and seating class factors.
-    For example, the total seat area for a wide-body aircraft would be:
-    *   `1.0 * num_economy_class_seats +`
-        <br/>`1.5 * num_premium_economy_class_seats +`
-        <br/>`4.0 * num_business_class_seats +`
-        <br/>`5.0 * num_first_class_seats`
-*   The *reference total seat area* for an aircraft is roughly the median total
-    seat area.
-*   During a *comparison* step: If the *calculated total seat area* for a given
-    flight is within certain boundaries of the reference for that aircraft, the
-    filed seating data from published flight schedules is used. Otherwise the
-    *reference total seat area* is used.
 
 ## Example emission estimation
 
