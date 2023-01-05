@@ -16,6 +16,7 @@
 *   [Example emission estimation](#example-emission-estimation)
 *   [Legal base for model data sharing](#legal-base-for-model-data-sharing)
 *   [Versioning](#versioning)
+*   [Changelog](#changelog)
 *   [Limitations](#limitations)
 *   [Data quality](#data-quality)
 *   [Contact](#contact)
@@ -352,6 +353,40 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
     inaccuracies in the model implementation.
 *   **Dated versions**: Model datasets are recreated with refreshed input data
     but no change to the algorithms regularly.
+
+## Changelog
+
+### 1.5.1
+
+Adding a fleet-level source for seating configuration data. For airlines that
+don't file seating configuration information in flight schedules but use the
+same seating configuration for all their aircraft of a certain model, a fall
+back to the "Seats (Equipment Configuration) File" provided by OAG is performed.
+
+### 1.5.0
+
+Following recent discussions with academic and industry partners, we are
+adjusting the TIM to focus on CO2 emissions. While we strongly believe in
+including non-CO2 effects in the model long-term, the details of how and when to
+include these factors requires more input from our stakeholders as part of a
+governance model that’s in development. With this change, we are provisionally
+removing contrails effects from our CO2e estimates but will keep the labeling as
+“CO2e” in the model to ensure future compatibility.
+
+We believe CO2e factors are critical to include in the model, given the emphasis
+on them in the IPCC’s AR6 report. We want to make sure that when we do
+incorporate them into the model, we have a strong plan to account for time of
+day and regional variations in contrails’ warming impact. We are committed to
+providing consumers the most accurate information as they make informed choices
+about their travel options.
+
+We continue to invest into research and collaborate with leading scientists,
+NGOs, and partners to better incorporate contrails and other non-GHG impact into
+our model, and we look forward to sharing updates at a later date.
+
+### 1.4.0
+
+Initial public version of the Travel Impact Model.
 
 ## Limitations
 
