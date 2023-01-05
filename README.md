@@ -1,4 +1,4 @@
-## Travel Impact Model 1.5.1
+## Travel Impact Model 1.6.0
 
 #### (Implementation of the Travalyst Shared Framework by Google)
 
@@ -267,14 +267,56 @@ configurations confirmed the accuracy of these factors.
 
 **Load factors**
 
-Load factors are derived from a projection of past passenger statistics from
-2019 U.S. data average
-([source](https://fred.stlouisfed.org/series/LOADFACTOR)):
+Passenger load factors are predicted based on historical passenger statistics.
+TIM uses a tiered approach to determine passenger load factors. High resolution,
+specific data (i.e. by route) is preferred where available, and in the absence
+of more granular data the model falls back to a generic value (i.e. global
+default) only when no suitable high resolution options are available.
 
-*   Passenger load follows a seasonal pattern with low in Jan (~79.3%) and high
-    in June (~89.8%)
-    *   Aggregated overall average applied in the model is **84.5%**
-*   Cargo load not included
+Tier 1: Highly specific passenger load factors
+
+*   For flights within, to, and from the United States, TIM uses historical data
+    provided by the
+    [U.S. Department of Transportation Bureau of Transportation Statistics](https://www.bts.gov/airline-data-downloads).
+
+    *   Where data is available for a given carrier, route, and month of travel,
+        use the average passenger load factor over the last 6 years.
+    *   Where data is available for the given carrier and month of travel, but
+        not the specific route, use the average passenger load factor across all
+        routes over the last 6 years.
+    *   If fewer than three years of data are available for averaging, we do not
+        calculate an average, and fallback to the approach described below
+        instead.
+
+Tier 2: Global default passenger load factor
+
+*   For all other flights for which an equivalent public-domain dataset with
+    similar granularity is not currently available, TIM falls back to use a load
+    factor value of **84.5%**. This value is derived from
+    [historical data for the U.S.](https://fred.stlouisfed.org/series/LOADFACTOR)
+    from 2019.
+*   An analysis of load factors sourced from publically available airline
+    investor reports indicates that this value is a good approximation for the
+    passenger load factor globally.
+
+Cargo load factors are not included.
+
+**Load factor data source specifics**
+
+T-100 from
+[U.S. Department of Transportation Bureau of Transportation Statistics](https://www.bts.gov/airline-data-downloads)
+
+*   Only data from the last six years is used.
+*   Data is updated on a monthly basis (TIM version number will not increase).
+*   Any month of data for which the overall load factor (aggregated over all
+    airlines and routes) differs more than 20% from the average load factor over
+    the last 10 years is removed as an outlier month. March 2020 - February 2021
+    (inclusive) are removed from the data as a result.
+*   To account for patterns of seasonality that do not correspond with the exact
+    month of travel (e.g. public holidays), the previous and next month are
+    taken into account for the average load factor of any given month of travel.
+    E.g. For future flights in March, we aggregate over all flights in February,
+    March, and April.
 
 ## Example emission estimation
 
@@ -356,6 +398,14 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
 
 ## Changelog
 
+### 1.6.0
+
+Adding carrier and route specific passenger load factors for flights from, to,
+and within the U.S., taking seasonality patterns into account. We are using data
+from the
+[U.S. Department of Transportation Bureau of Transportation Statistics](https://www.bts.gov/).
+For more details, see the [section on load factors](#factors-details).
+
 ### 1.5.1
 
 Adding a fleet-level source for seating configuration data. For airlines that
@@ -429,11 +479,6 @@ not supported.
 
 **Greenhouse gases:** Greenhouse gases other than CO<sub>2</sub> are not
 included.
-
-**Passenger load factors:** The same default load factor is used for every
-flight instead of including seasonal, regional, and airline level factors.
-
-This simplifying assumption was introduced during Covid-19 pandemic times.
 
 **Seat configurations:** If there are no seat configurations individual numbers
 for a flight available from published flight schedules, or if they are
