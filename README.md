@@ -145,8 +145,8 @@ supported aircraft:
 
 *   Interpolation is used for flights that are in between two distance data
     points. As a theoretical example, a 5250 nautical miles flight on a Boeing
-    787-9 will emit 172778.5 kg of CO<sub>2</sub> during the CCD phase (where
-    172778.5 equals 164827 + (180730 - 164827)/2 and figures for 5000nm and
+    787-9 will emit 172942.5 kg of CO<sub>2</sub> during the CCD phase (where
+    172942.5 equals 164982 + (180903 - 164982)/2 and figures for 5000nm and
     5500nm entries were taken from Table 1).
 *   Extrapolation is used for flights that are either shorter than the smallest
     supported distance, or longer than the longest supported distance for that
