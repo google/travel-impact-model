@@ -1,4 +1,4 @@
-## Travel Impact Model 1.6.0
+## Travel Impact Model 1.7.0
 
 #### (Implementation of the Travalyst Shared Framework by Google)
 
@@ -59,18 +59,18 @@ There are several resources about the EEA model available:
     [documentation](https://www.eurocontrol.int/sites/default/files/content/documents/201807-european-aviation-fuel-burn-emissions-system-eea-v2.pdf)
     on pre-work for the EEA model
 
+Additionally, the Travel Impact Model replaces the EEA model’s jet fuel combustion to CO<sub>2</sub> conversion factor with the [CORSIA methodology’s](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf) recommended conversion factor.
+
 The EEA model takes the efficiency of the aircraft into account. As shown in
 Figure 1, a typical flight is modeled in two stages: *take off and landing*
 (LTO, yellow) and *cruise, climb, and descend* (CCD, blue).
 
-![alt_text](images/image1.png "image_tooltip")
+![alt_text](images/image3.png "image_tooltip")
 
 <p style="text-align: right">
 (Fig 1)</p>
 
-For each stage, there are aircraft-specific and distance-specific CO<sub>2</sub>
-emission estimates based on the fuel burn of the aircraft. Table 1 shows an
-example emissions forecast for a B789 aircraft:
+For each stage, there are aircraft-specific and distance-specific fuel burn estimates. Table 1 shows an example fuel burn forecast for a Boeing 787-9 (B789) aircraft:
 
 <table>
   <tr>
@@ -89,9 +89,9 @@ example emissions forecast for a B789 aircraft:
    </td>
    <td style="background-color: null"><code>500</code>
    </td>
-   <td style="background-color: null"><code>5'439</code>
+   <td style="background-color: null"><code>1,727</code>
    </td>
-   <td style="background-color: null"><code> 18'318</code>
+   <td style="background-color: null"><code>5,815</code>
    </td>
   </tr>
   <tr>
@@ -99,9 +99,9 @@ example emissions forecast for a B789 aircraft:
    </td>
    <td style="background-color: null"><code>1000</code>
    </td>
-   <td style="background-color: null"><code>5'439</code>
+   <td style="background-color: null"><code>1,727</code>
    </td>
-   <td style="background-color: null"><code> 33'925</code>
+   <td style="background-color: null"><code>10,770</code>
    </td>
   </tr>
   <tr>
@@ -119,9 +119,9 @@ example emissions forecast for a B789 aircraft:
    </td>
    <td style="background-color: null"><code>5000</code>
    </td>
-   <td style="background-color: null"><code>5'439</code>
+   <td style="background-color: null"><code>1,727</code>
    </td>
-   <td style="background-color: null"><code>164'982</code>
+   <td style="background-color: null"><code>52,375</code>
    </td>
   </tr>
   <tr>
@@ -129,9 +129,9 @@ example emissions forecast for a B789 aircraft:
    </td>
    <td style="background-color: null"><code>5500</code>
    </td>
-   <td style="background-color: null"><code>5'439</code>
+   <td style="background-color: null"><code>1,727</code>
    </td>
-   <td style="background-color: null"><code>180'903</code>
+   <td style="background-color: null"><code>57,430</code>
    </td>
   </tr>
 </table>
@@ -143,14 +143,11 @@ By using these numbers together with linear interpolation or extrapolation, it
 is possible to deduce the emission estimate for flights of any length on
 supported aircraft:
 
-*   Interpolation is used for flights that are in between two distance data
-    points. As a theoretical example, a 5250 nautical miles flight on a Boeing
-    787-9 will emit 172942.5 kg of CO<sub>2</sub> during the CCD phase (where
-    172942.5 equals 164982 + (180903 - 164982)/2 and figures for 5000nm and
-    5500nm entries were taken from Table 1).
+*   Interpolation is used for flights that are in between two distance data points. As a theoretical example, a 5250 nautical miles flight on a Boeing 787-9 will burn approximately 54902.5 kg of fuel during the CCD phase (where 54902.5 equals 52375 + (57430 - 52375)/2, with figures for 5000nm and 5500nm taken from Table 1).
 *   Extrapolation is used for flights that are either shorter than the smallest
     supported distance, or longer than the longest supported distance for that
     aircraft type.
+* The CORSIA jet fuel combustion to CO<sub>2</sub> conversion factor of 3.1672 kg CO<sub>2</sub> / kg of jet fuel burnt is then applied to calculate the total CO<sub>2</sub> emitted.
 
 There is information for most commonly-used aircraft types in the EEA data, but
 some are missing. For missing aircraft types, one of the following alternatives
@@ -186,6 +183,7 @@ Used for flight level emissions:
 *   EEA Report No 13/2019 1.A.3.a Aviation 1 Master emissions calculator 2019
     ([link](https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation-1/view))
 *   Piano-X aircraft database ([link](https://www.lissys.uk/PianoX.html))
+* CORSIA Eligible Fuels Life Cycle Assessment Methodology ([link](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf))
 
 ### Breakdown from flight level to individual level
 
@@ -332,16 +330,16 @@ Let’s consider the following flight parameters:
 
 To get the total emissions for a flight, let’s follow the process below:
 
-1.  Calculate great circle distance between ZRH and SFO: 9369 km (= 5058.855
-    nautical miles)
-2.  Look up the static LTO numbers and the distance based CCD number from
-    aircraft performance data (see Table 1), and interpolate CO<sub>2</sub> for
-    a 9369 km long flight:
-    *   LTO 5.43 metric tons of CO<sub>2</sub>
-    *   CCD 166.87 metric tons of CO<sub>2</sub> calculated
-        *   165.0 + (5058.9 - 5000) \* (180.9 -165.0) / (5500 - 5000)
-3.  Sum LTO and CCD number for total flight level result:
-    *   166.87 + 5.43 = 172.3 metric tons of CO<sub>2</sub>
+1. Calculate great circle distance between ZRH and SFO: 9369 km (= 5058.9 nautical miles)
+2. Look up the static LTO numbers and the distance-based CCD number from aircraft performance data (see Table 1), and interpolate fuel burnt for a 9369 km long flight:
+  * LTO 1727 kg of fuel burnt 
+  * CCD 52970 kg of fuel burnt calculated
+     * 52375 kg + (5058.9 - 5000) * (57430 kg - 52375 kg) / (5500 - 5000) = 52970 kg
+3. Sum LTO and CCD number for total flight-level result:
+  * 1727 kg + 52970 kg = 54697 kg of fuel burnt 
+4. Convert from fuel burnt to CO<sub>2</sub> emissions for total flight-level result:
+  * 54697 kg * 3.1672 = 173236 kg of CO<sub>2</sub>
+
 
 Once the total flight emissions are computed, let’s compute the per passenger
 break down:
@@ -354,19 +352,16 @@ break down:
     \* business\_class\_multiplier + …
     *   In this specific example, the estimated area is: \
         0 \* 5 + 48 \* 4 + 1.5 \* 21 + 188 \* 1 = 411.5
-3.  Divide the total CO<sub>2</sub> emissions by the equivalent capacity
-    calculated above to get the of CO<sub>2</sub> emissions per-economy
-    passenger: 172.3 t CO<sub>2</sub>/411.5 = 418.71 kg CO<sub>2</sub>
-4.  Emissions per-passenger for other cabins can be derived by multiplying for
-    the corresponding cabin factor.
-    *   Business: 418.71 \* 4 = 1674.85 kg CO<sub>2</sub>
-    *   Premium Economy: 418.71 \* 1.5 = 628.06 kg CO<sub>2</sub>
-    *   Economy = 418.71kg CO<sub>2</sub>
-5.  Scale to estimated load factor 0.845 by apportioning emissions to occupied
-    seats:
-    *   Business: 1674.85 / 0.845 = 1982.067 kg CO<sub>2</sub>
-    *   Premium Economy: 628.06 / 0.845 = 743.28 kg CO<sub>2</sub>
-    *   Economy = 418.71 / 0.845 = 495.52 kg CO<sub>2</sub>
+3. Divide the total CO<sub>2</sub> emissions by the equivalent capacity calculated above to get the of CO<sub>2</sub> emissions per-economy passenger: 173236 kg CO<sub>2</sub> / 411.5 = 420.99 kg CO<sub>2</sub>
+4. Emissions per-passenger for other cabins can be derived by multiplying for the corresponding cabin factor.
+  * Business: 420.99 * 4 = 1683.96 kg CO<sub>2</sub>
+  * Premium Economy: 420.99 * 1.5 = 631.49 kg CO<sub>2</sub>
+  * Economy = 420.99 kg CO<sub>2</sub>
+5. Scale to estimated load factor 0.845 by apportioning emissions to occupied seats:
+  * Business: 1683.96 / 0.845 = 1992.85 kg CO<sub>2</sub>
+  * Premium Economy: 631.49 / 0.845 = 747.33 kg CO<sub>2</sub>
+  * Economy = 420.99 / 0.845 = 498.21 kg CO<sub>2</sub>
+
 
 ## Legal base for model data sharing
 
@@ -397,6 +392,10 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
     but no change to the algorithms regularly.
 
 ## Changelog
+
+### 1.7.0
+
+Updating the jet fuel combustion to CO<sub>2</sub> conversion factor from 3.15 based on the EEA methodology to 3.1672 to align with the [CORSIA methodology’s](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf) recommended factor.
 
 ### 1.6.0
 
@@ -516,6 +515,8 @@ increased its concentration in the atmosphere, leading to global warming.
 look like thin strands. There are natural cirrus clouds, and also contrail
 induced cirrus clouds that under certain conditions occur as the result of a
 contrail formation from aircraft engine exhaust.
+
+**CORSIA**: Carbon Offsetting and Reduction Scheme for International Aviation, a carbon offset and reduction scheme to curb the aviation impact on climate change developed by the International Civil Aviation Organization.
 
 **Radiative Forcing (RF):** Radiative Forcing is the instantaneous difference in
 radiative energy flux stemming from a climate perturbation, measured at the top
