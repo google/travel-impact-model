@@ -78,10 +78,9 @@ For each stage, there are aircraft-specific and distance-specific fuel burn esti
    </td>
    <td style="background-color: null"><code>Distance (nm)</code>
    </td>
-   <td style="background-color: null"><code>LTO CO<sub>2 </sub>forecast<sub> </sub>(kg)</code>
+   <td style="background-color: null"><code>LTO fuel forecast (kg)</code>
    </td>
-   <td style="background-color: null"><code>CCD CO<sub>2
-</sub>forecast<sub> </sub>(kg)</code>
+   <td style="background-color: null"><code>CCD fuel forecast (kg)</code>
    </td>
   </tr>
   <tr>
