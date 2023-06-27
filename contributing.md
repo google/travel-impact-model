@@ -1,7 +1,7 @@
 # How to Contribute
 
 We are welcoming feedback and enquiries. Please get in touch using this
-[form](https://support.google.com/travel/contact/partnersupport).
+[form](https://support.google.com/travel/contact/tim).
 
 ## Community Guidelines
 
