@@ -62,6 +62,32 @@ single source of truth, as a public good, for calculating and presenting the cli
 The model combines flight origin and destination, aircraft type, cabin class and seat configuration, load factors and average aircraft utilization to estimate CO2 emissions for each flight
 (per seat/passenger). The methodology output is free and available publicly via an API. More granular methodology and API access details can be found <a href="https://github.com/google/travel-impact-model" aria-label="More granular methodology and API access details" target="_blank">here</a>.
 
+### Model principles
+
+<ul>
+  <li class="principle">
+    <b>Accurate</b> and validated with real-world data
+  </li>
+  <li class="principle">
+    <b>Precise</b> in distinguishing more and less emitting flights
+  </li>
+  <li class="principle">
+    <b>Comprehensive</b> in covering the full climate impacts of aviation
+  </li>
+  <li class="principle">
+    <b>Futureproof</b> across new technologies and aircraft designs
+  </li>
+  <li class="principle">
+    <b>Transparent</b> in methods, data sources, and assumptions
+  </li>
+  <li class="principle">
+    <b>Consistent</b> across airlines and industry stakeholders
+  </li>
+  <li class="principle">
+    <b>Accessible</b> and free to all users
+  </li>
+</ul>
+
 ## Governance
 
 The Travel Impact Model is administered by Google and overseen by an independent Advisory Committee that consists of world-leading experts on sustainability and aviation from industry, academia,
