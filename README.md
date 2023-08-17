@@ -15,6 +15,7 @@
         *   [Factors details](#factors-details)
 *   [Example emission estimation](#example-emission-estimation)
 *   [Legal base for model data sharing](#legal-base-for-model-data-sharing)
+*   [API access](#api-access)
 *   [Versioning](#versioning)
 *   [Changelog](#changelog)
 *   [Limitations](#limitations)
@@ -364,10 +365,13 @@ break down:
 
 ## Legal base for model data sharing
 
-The carbon emission estimate data will be available via API under the
+The carbon emission estimate data are available via API under the
 [Creative Commons Attribution-ShareAlike CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 open source license
 ([legal code](https://creativecommons.org/licenses/by-sa/4.0/legalcode)).
+
+## API access
+Developer documentation is available on the Google Developers site for the [Travel Impact Model API](https://developers.google.com/travel/impact-model).
 
 ## Versioning
 
