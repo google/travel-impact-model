@@ -1,4 +1,4 @@
-## Travel Impact Model 1.7.0
+## Travel Impact Model 1.8.0
 
 #### (Implementation of the Travalyst Shared Framework by Google)
 
@@ -45,7 +45,7 @@ the actual flight route, and weather conditions at the time of flight.
 
 #### Flight level CO<sub>2</sub> estimates
 
-The Travel Impact Model is based on the Tier 3 methodology for emission
+The Travel Impact Model estimates fuel burn based on the Tier 3 methodology for emission
 estimates from the
 [Annex 1.A.3.a Aviation 2019](https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation/view)
 published by the European Environment Agency (EEA).
@@ -60,7 +60,9 @@ There are several resources about the EEA model available:
     [documentation](https://www.eurocontrol.int/sites/default/files/content/documents/201807-european-aviation-fuel-burn-emissions-system-eea-v2.pdf)
     on pre-work for the EEA model
 
-Additionally, the Travel Impact Model replaces the EEA model’s jet fuel combustion to CO<sub>2</sub> conversion factor with the [CORSIA methodology’s](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf) recommended conversion factor.
+Additionally, the Travel Impact Model updates the fuel burn to emissions conversion factor to align with the [ISO 14083](https://www.iso.org/standard/78864.html) Fuel Heat Combustion factor and [CORSIA Life Cycle Assessment](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf), and breaks down emissions estimates into Well-to-Tank (WTT) and Tank-to-Wake (TTW) emissions.
+
+Tank-to-Wake emissions account for emissions produced by burning jet fuel during flying, take-off and landing. Well-to-Tank emissions account for emissions generated during the production, processing, handling and delivery of jet fuel. When summed, Well-to-Wake (WTW) emissions account for the full life cycle of flying.
 
 The EEA model takes the efficiency of the aircraft into account. As shown in
 Figure 1, a typical flight is modeled in two stages: *take off and landing*
@@ -147,7 +149,32 @@ supported aircraft:
 *   Extrapolation is used for flights that are either shorter than the smallest
     supported distance, or longer than the longest supported distance for that
     aircraft type.
-* The CORSIA jet fuel combustion to CO<sub>2</sub> conversion factor of 3.1672 kg CO<sub>2</sub> / kg of jet fuel burnt is then applied to calculate the total CO<sub>2</sub> emitted.
+*   The Lower Heating Value from ISO 14083 (43.1 MJ/kg averaged over US and EU numbers from [source](https://www.iso.org/standard/78864.html) Table I1 and Table I2) and CORSIA Carbon Intensity value (74 gCO<sub>2</sub>e/MJ from [source](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf) Table 5) are used to calculate the jet fuel combustion to CO<sub>2</sub> conversion factor of 3.1894. The CORSIA Life Cycle Assessment methodology is used to calculate a WTT CO<sub>2</sub>e emissions factor of 0.6465 (TTW 15g CO<sub>2</sub>e/MJ added to the TTW 74 gCO<sub>2</sub>e/MJ Carbon Intensity to total up to the WTW lifecycle Carbon Intensity of 89 gCO<sub>2</sub>e/MJ from [source](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf) page 22 and Table 7). The factors used are as follows:
+
+<table>
+  <tr>
+   <td style="background-color: null"><code>kg CO<sub>2</sub>e/kg of A1 jet fuel burn</code>
+   </td>
+   <td style="background-color: null"><code>TTW [kg CO<sub>2</sub>e/kg]</code>
+   </td>
+   <td style="background-color: null"><code>WTT [kg CO<sub>2</sub>e/kg]</code>
+   </td>
+   <td style="background-color: null"><code>WTW [kg CO<sub>2</sub>e/kg]</code>
+   </td>
+  </tr>
+  <tr>
+   <td style="background-color: null"><code>CORSIA and ISO</code>
+   </td>
+   <td style="background-color: null"><code>3.1894</code>
+   </td>
+   <td style="background-color: null"><code>0.6465</code>
+   </td>
+   <td style="background-color: null"><code>3.8359</code>
+   </td>
+  </tr>
+</table>
+
+CO<sub>2</sub>e is short for CO<sub>2</sub> equivalent and includes Kyoto Gases (GHG) as described [here](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Kyoto_basket#:~:text=The%20Kyoto%20basket%20encompasses%20the,sulphur%20hexafluoride%20(SF6)). Warming effects produced by short-lived climate pollutants (such as contrail-induced cirrus clouds) are not yet included in CO<sub>2</sub>e as calculated by the Travel Impact Model.
 
 There is information for most commonly-used aircraft types in the EEA data, but
 some are missing. For missing aircraft types, one of the following alternatives
@@ -183,7 +210,8 @@ Used for flight level emissions:
 *   EEA Report No 13/2019 1.A.3.a Aviation 1 Master emissions calculator 2019
     ([link](https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation-1/view))
 *   Piano-X aircraft database ([link](https://www.lissys.uk/PianoX.html))
-* CORSIA Eligible Fuels Life Cycle Assessment Methodology ([link](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf))
+*   CORSIA Eligible Fuels Life Cycle Assessment Methodology ([link](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf))
+*   ISO 14083 ([link](https://www.iso.org/standard/78864.html))
 
 ### Breakdown from flight level to individual level
 
@@ -331,14 +359,16 @@ Let’s consider the following flight parameters:
 To get the total emissions for a flight, let’s follow the process below:
 
 1. Calculate great circle distance between ZRH and SFO: 9369 km (= 5058.9 nautical miles)
-2. Look up the static LTO numbers and the distance-based CCD number from aircraft performance data (see Table 1), and interpolate fuel burnt for a 9369 km long flight:
-  * LTO 1727 kg of fuel burnt 
-  * CCD 52970 kg of fuel burnt calculated
-     * 52375 kg + (5058.9 - 5000) * (57430 kg - 52375 kg) / (5500 - 5000) = 52970 kg
+2. Look up the static LTO numbers and the distance-based CCD number from aircraft performance data (see Table 1), and interpolate fuel burn for a 9369 km long flight:
+  * LTO 1727 kg of fuel burn
+  * CCD 52970 kg of fuel burn calculated
+     * 52375 + (5058.9 - 5000) * (57430 - 52375) / (5500 - 5000) = 52970
 3. Sum LTO and CCD number for total flight-level result:
-  * 1727 kg + 52970 kg = 54697 kg of fuel burnt 
-4. Convert from fuel burnt to CO<sub>2</sub> emissions for total flight-level result:
-  * 54697 kg * 3.1672 = 173236 kg of CO<sub>2</sub>
+  * 1727 kg + 52970 kg = 54697 kg of fuel burn
+4. Convert from fuel burn to CO<sub>2</sub>e emissions for total flight-level result:
+  * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 54697 * 0.6465 = 35362
+  * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 54697 * 3.1894 = 174451
+  * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: (54697 * 0.6465) + (54697 * 3.1894) = 209812
 
 
 Once the total flight emissions are computed, let’s compute the per passenger
@@ -352,16 +382,46 @@ break down:
     \* business\_class\_multiplier + …
     *   In this specific example, the estimated area is: \
         0 \* 5 + 48 \* 4 + 1.5 \* 21 + 188 \* 1 = 411.5
-3. Divide the total CO<sub>2</sub> emissions by the equivalent capacity calculated above to get the of CO<sub>2</sub> emissions per-economy passenger: 173236 kg CO<sub>2</sub> / 411.5 = 420.99 kg CO<sub>2</sub>
-4. Emissions per-passenger for other cabins can be derived by multiplying for the corresponding cabin factor.
-  * Business: 420.99 * 4 = 1683.96 kg CO<sub>2</sub>
-  * Premium Economy: 420.99 * 1.5 = 631.49 kg CO<sub>2</sub>
-  * Economy = 420.99 kg CO<sub>2</sub>
+3. Divide the total CO<sub>2</sub>e emissions by the equivalent capacity calculated above to get the CO<sub>2</sub>e emissions per economy passenger.
+  * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 35362 / 411.5 = 85.934
+  * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 174451 / 411.5 = 423.939
+  * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 85.934 + 423.939 = 509.873
+4. Emissions per passenger for other cabins can be derived by multiplying by the corresponding cabin factor.
+  * First:
+      * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934 * 5 = 429.67
+      * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939 * 5 = 2119.695
+      * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873 * 5 = 2549.365
+  * Business:
+      * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934 * 4 = 343.736
+      * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939 * 4 = 1695.756
+      * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873 * 4 = 2039.492
+  * Premium Economy:
+      * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934 * 1.5 = 128.901
+      * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939 * 1.5 = 635.909
+      * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873 * 1.5 = 764.81
+  * Economy:
+      * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934
+      * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939
+      * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873
 5. Scale to estimated load factor 0.845 by apportioning emissions to occupied seats:
-  * Business: 1683.96 / 0.845 = 1992.85 kg CO<sub>2</sub>
-  * Premium Economy: 631.49 / 0.845 = 747.33 kg CO<sub>2</sub>
-  * Economy = 420.99 / 0.845 = 498.21 kg CO<sub>2</sub>
+  * First:
+      * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 429.67 / 0.845 = 508.485
+      * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 2119.695 / 0.845 = 2508.515
+      * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 2549.365 / 0.845 = 3017
+  * Business:
+      * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 343.736 / 0.845 = 406.788
+      * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 1695.756 / 0.845 = 2006.812
+      * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 2039.492 / 0.845 = 2413.6
+  * Premium Economy:
+      * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 128.901 / 0.845 = 152.546
+      * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 635.909 / 0.845 = 752.555
+      * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 764.81 / 0.845 = 905.101
+  * Economy:
+      * Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934 / 0.845 = 101.697
+      * Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939 / 0.845 = 501.703
+      * Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873 / 0.845 = 603.4
 
+Note that the model generates emission estimates for all cabin classes, including cabin classes where the seat count is zero, as cabin classifications are not always consistent across data providers. Therefore, providing estimates for all cabin classes simplifies integration of TIM data with other datasets.
 
 ## Legal base for model data sharing
 
@@ -371,6 +431,7 @@ open source license
 ([legal code](https://creativecommons.org/licenses/by-sa/4.0/legalcode)).
 
 ## API access
+
 Developer documentation is available on the Google Developers site for the [Travel Impact Model API](https://developers.google.com/travel/impact-model).
 
 ## Versioning
@@ -396,6 +457,10 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
 
 ## Changelog
 
+### 1.8.0
+
+Adding Well-to-Tank (WTT) and Tank-to-Wake (TTW) emissions break-downs to all flight emissions. Updating the jet fuel combustion to CO<sub>2</sub> conversion factor from the minimum value of 3.1672 to the value of 3.1894 (using Lower Heating Value from ISO 14083 and CORSIA Carbon Intensity value), and using the CORSIA Life Cycle Assessment methodology to implement a WTT CO<sub>2</sub>e emissions factor 0.6465. Reference: [ISO](https://www.iso.org/standard/78864.html), [CORSIA](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf).
+
 ### 1.7.0
 
 Updating the jet fuel combustion to CO<sub>2</sub> conversion factor from 3.15 based on the EEA methodology to 3.1672 to align with the [CORSIA methodology’s](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf) recommended factor.
@@ -418,14 +483,14 @@ back to the "Seats (Equipment Configuration) File" provided by OAG is performed.
 ### 1.5.0
 
 Following recent discussions with academic and industry partners, we are
-adjusting the TIM to focus on CO2 emissions. While we strongly believe in
-including non-CO2 effects in the model long-term, the details of how and when to
+adjusting the TIM to focus on CO<sub>2</sub> emissions. While we strongly believe in
+including non-CO<sub>2</sub> effects in the model long-term, the details of how and when to
 include these factors requires more input from our stakeholders as part of a
 governance model that’s in development. With this change, we are provisionally
-removing contrails effects from our CO2e estimates but will keep the labeling as
-“CO2e” in the model to ensure future compatibility.
+removing contrails effects from our CO<sub>2</sub>e estimates but will keep the labeling as
+“CO<sub>2</sub>e” in the model to ensure future compatibility.
 
-We believe CO2e factors are critical to include in the model, given the emphasis
+We believe CO<sub>2</sub>e factors are critical to include in the model, given the emphasis
 on them in the IPCC’s AR6 report. We want to make sure that when we do
 incorporate them into the model, we have a strong plan to account for time of
 day and regional variations in contrails’ warming impact. We are committed to
@@ -479,13 +544,12 @@ estimates.
 conventional fuel. Alternative fuel types (e.g. Sustainable Aviation Fuel) are
 not supported.
 
-**Greenhouse gases:** Greenhouse gases other than CO<sub>2</sub> are not
-included.
-
 **Seat configurations:** If there are no seat configurations individual numbers
 for a flight available from published flight schedules, or if they are
 incorrectly formatted or implausible, aircraft specific medians derived from the
 overall dataset are employed.
+
+**Contrail-induced cirrus clouds:** Warming effects produced by short-lived climate pollutants such as contrail-induced cirrus clouds are not yet included in emissions as calculated by the Travel Impact Model.
 
 ## Data quality
 
@@ -513,6 +577,8 @@ flight altitude of 3,000 feet.
 gas in Earth's atmosphere. Since the Industrial Revolution anthropogenic
 emissions – primarily from use of fossil fuels and deforestation – have rapidly
 increased its concentration in the atmosphere, leading to global warming.
+
+**CO<sub>2</sub>e**: CO<sub>2</sub>e is short for CO<sub>2</sub> equivalent, and is a metric measure used to compare the emissions from various greenhouse gases on the basis of their global-warming potential (GWP), by converting amounts of other gases to the equivalent amount of carbon dioxide with the same global warming potential ([source](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Carbon_dioxide_equivalent)).
 
 **Contrail-induced cirrus clouds**: Cirrus clouds are atmospheric clouds that
 look like thin strands. There are natural cirrus clouds, and also contrail
@@ -544,6 +610,8 @@ on the surface of a sphere when measured along the surface of the sphere.
 
 **ICAO:** The International Civil Aviation Organization, a specialized agency of
 the United Nations.
+
+**ISO 14083**: The international standard that establishes a common methodology for the quantification and reporting of greenhouse gas (GHG) emissions arising from the operation of transport chains of passengers and freight ([source](https://www.iso.org/standard/78864.html)), published by the International Organization for Standardization (ISO).
 
 **LTO:** The flight phases *Take Off and Landing* occur below a flight altitude
 of 3000 feet at the beginning and the end of a flight. They include the
