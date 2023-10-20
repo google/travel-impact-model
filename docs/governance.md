@@ -54,7 +54,7 @@ advisory_commitee_members:
 
 # Travel Impact Model
 
-The Travel Impact Model (TIM) is a state of the art emissions estimation model that is built from public and licensable external datasets, based on the latest science. It aims to provide a
+The Travel Impact Model (TIM) is a transparent & continuously improving emissions estimation model that is built from public and licensable external datasets, based on the latest science. It aims to provide a
 single source of truth, as a public good, for calculating and presenting the climate impact of individual flight trips to passengers.
 
 ## About the model
