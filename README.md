@@ -62,7 +62,7 @@ There are several resources about the EEA model available:
 
 Additionally, the Travel Impact Model updates the fuel burn to emissions conversion factor to align with the [ISO 14083](https://www.iso.org/standard/78864.html) Fuel Heat Combustion factor and [CORSIA Life Cycle Assessment](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf), and breaks down emissions estimates into Well-to-Tank (WTT) and Tank-to-Wake (TTW) emissions.
 
-Tank-to-Wake emissions account for emissions produced by burning jet fuel during flying, take-off and landing. Well-to-Tank emissions account for emissions generated during the production, processing, handling and delivery of jet fuel. When summed, Well-to-Wake (WTW) emissions account for the full life cycle of flying.
+Tank-to-Wake emissions account for emissions produced by burning jet fuel during flying, take-off and landing. Well-to-Tank emissions account for emissions generated during the production, processing, handling and delivery of jet fuel. Well-to-Wake (WTW) emissions is the sum of Well-to-Tank (WTT) and Tank-to-Wake (TTW) emissions.
 
 The EEA model takes the efficiency of the aircraft into account. As shown in
 Figure 1, a typical flight is modeled in two stages: *take off and landing*
@@ -587,10 +587,6 @@ contrail formation from aircraft engine exhaust.
 
 **CORSIA**: Carbon Offsetting and Reduction Scheme for International Aviation, a carbon offset and reduction scheme to curb the aviation impact on climate change developed by the International Civil Aviation Organization.
 
-**Radiative Forcing (RF):** Radiative Forcing is the instantaneous difference in
-radiative energy flux stemming from a climate perturbation, measured at the top
-of the atmosphere.
-
 **Effective Radiative Forcing (ERF):** Radiative forcing effects can create
 rapid responses in the troposphere, which can either enhance or reduce the flux
 over time, and makes RF a difficult proxy for calculating long-term climate
@@ -618,12 +614,22 @@ of 3000 feet at the beginning and the end of a flight. They include the
 following phases: taxi-out, taxi-in (idle), take-off, climb-out, approach and
 landing.
 
-**TIM:** The Travel Impact Model described in this document.
+**Radiative Forcing (RF):** Radiative Forcing is the instantaneous difference in
+radiative energy flux stemming from a climate perturbation, measured at the top
+of the atmosphere.
 
 **Short Lived Climate Pollutants (SLCPs):** Pollutants that stay in the
 atmosphere for a short time (e.g. weeks) in comparison to Long Lived Climate
 Pollutants such as CO<sub>2</sub> that stay in the atmosphere for hundreds of
 years.
+
+**Tank-to-Wake (TTW):** Emissions produced by burning jet fuel during takeoff, flight, and landing of an aircraft.
+
+**TIM:** The Travel Impact Model described in this document.
+
+**Well-to-Tank (WTT):** Emissions generated during the production, processing, handling, and delivery of jet fuel.
+
+**Well-to-Wake (WTW):** The sum of Well-to-Tank (WTT) and Tank-to-Wake (TTW) emissions.
 
 ## Appendix
 
