@@ -1,4 +1,4 @@
-## Travel Impact Model 1.8.0
+## Travel Impact Model 1.9.0
 
 #### (Implementation of the Travalyst Shared Framework by Google)
 
@@ -296,23 +296,34 @@ configurations confirmed the accuracy of these factors.
 Passenger load factors are predicted based on historical passenger statistics.
 TIM uses a tiered approach to determine passenger load factors. High resolution,
 specific data (i.e. by route) is preferred where available, and in the absence
-of more granular data the model falls back to a generic value (i.e. global
-default) only when no suitable high resolution options are available.
+of more granular data, the model falls back to a generic value (i.e. global
+default).
 
 Tier 1: Highly specific passenger load factors
 
-*   For flights within, to, and from the United States, TIM uses historical data
-    provided by the
-    [U.S. Department of Transportation Bureau of Transportation Statistics](https://www.bts.gov/airline-data-downloads).
+1.  For flights within, to, and from the United States, we consider the T-100
+    historical dataset from the
+    [US Department of Transportation Bureau of Transportation Statistics](https://www.bts.gov/airline-data-downloads)
+    (see below for more details).
 
-    *   Where data is available for a given carrier, route, and month of travel,
-        use the average passenger load factor over the last 6 years.
-    *   Where data is available for the given carrier and month of travel, but
-        not the specific route, use the average passenger load factor across all
-        routes over the last 6 years.
-    *   If fewer than three years of data are available for averaging, we do not
-        calculate an average, and fallback to the approach described below
-        instead.
+    *   When the data is available for a given carrier, route, and month of
+        travel, we calculate the aggregate passenger load factors, looking back
+        up to six years.
+    *   When the data is available for a given carrier and month of travel,
+        but not the specific route, we use the average passenger load factor
+        across all the routes, up to six years back.
+    *   If fewer than three years of data are available, we consider ch-aviation
+        load factors described below.
+
+2.  For all other flights, we consider the historical load factor data provided
+    by [ch-aviation](https://www.ch-aviation.com/):
+
+    *   When the data is available for a given carrier and month of travel, we
+        calculate the aggregate passenger load factors, looking back up to six
+        years.
+    *   If fewer than three years of data are available, we use the global
+        average fallback value instead as described below (\"_Global default
+        passenger load factor_\").
 
 Tier 2: Global default passenger load factor
 
@@ -321,7 +332,7 @@ Tier 2: Global default passenger load factor
     factor value of **84.5%**. This value is derived from
     [historical data for the U.S.](https://fred.stlouisfed.org/series/LOADFACTOR)
     from 2019.
-*   An analysis of load factors sourced from publically available airline
+*   An analysis of load factors sourced from publicly available airline
     investor reports indicates that this value is a good approximation for the
     passenger load factor globally.
 
@@ -331,12 +342,13 @@ Cargo load factors are not included.
 
 T-100 from
 [U.S. Department of Transportation Bureau of Transportation Statistics](https://www.bts.gov/airline-data-downloads)
+and [ch-aviation](https://www.ch-aviation.com/)
 
 *   Only data from the last six years is used.
 *   Data is updated on a monthly basis (TIM version number will not increase).
 *   Any month of data for which the overall load factor (aggregated over all
-    airlines and routes) differs more than 20% from the average load factor over
-    the last 10 years is removed as an outlier month. March 2020 - February 2021
+    airlines and routes) differs more than 10% from the average load factor
+    since 2017 is removed as an outlier month. March 2020–February 2022
     (inclusive) are removed from the data as a result.
 *   To account for patterns of seasonality that do not correspond with the exact
     month of travel (e.g. public holidays), the previous and next month are
@@ -456,6 +468,17 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
     but no change to the algorithms regularly.
 
 ## Changelog
+
+### 1.9.0
+
+Adding carrier-level passenger load factors from
+[ch-aviation](https://www.ch-aviation.com/) for flights that are not already
+covered by the T-100 dataset from the
+[US Department of Transportation Bureau of Transportation Statistics](https://www.bts.gov/airline-data-downloads).
+Also adjusting the load factors outlier exclusion criteria from 20% to 10%
+deviation from average load factor since 2017, resulting in removing
+March 2020–February 2022 (inclusive) (previously March 2020–February 2021). See
+the [section on load factors](#factors-details) for more details.
 
 ### 1.8.0
 
