@@ -1,4 +1,4 @@
-## Travel Impact Model 1.9.0
+## Travel Impact Model 1.9.1
 
 #### (Implementation of the Travalyst Shared Framework by Google)
 
@@ -301,8 +301,8 @@ default).
 
 Tier 1: Highly specific passenger load factors
 
-1.  For flights within, to, and from the United States, we consider the T-100
-    historical dataset from the
+1.  For flights within, to, and from the United States and its territories, we
+    consider the T-100 historical dataset from the
     [US Department of Transportation Bureau of Transportation Statistics](https://www.bts.gov/airline-data-downloads)
     (see below for more details).
 
@@ -468,6 +468,12 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
     but no change to the algorithms regularly.
 
 ## Changelog
+
+### 1.9.1
+
+Expanding T-100 coverage to include US territories. See
+[section on load factors](#factors-details) for information on the T-100
+dataset.
 
 ### 1.9.0
 
