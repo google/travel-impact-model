@@ -7,7 +7,7 @@
 *   [Background](#background)
 *   [Model overview](#model-overview)
     *   [Flight level emission estimates](#flight-level-emission-estimates)
-        *   [Flight level CO<sub>2</sub> estimates](#flight-level-co2-estimates)
+        *   [Flight level CO<sub>2</sub>e estimates](#flight-level-co2e-estimates)
         *   [Data sources](#data-sources)
     *   [Breakdown from flight level to individual level](#breakdown-from-flight-level-to-individual-level)
         *   [Data sources](#data-sources-1)
@@ -43,7 +43,7 @@ the actual flight route, and weather conditions at the time of flight.
 
 ### Flight level emission estimates
 
-#### Flight level CO<sub>2</sub> estimates
+#### Flight level CO<sub>2</sub>e estimates
 
 The Travel Impact Model estimates fuel burn based on the Tier 3 methodology for
 emission estimates from the
@@ -169,7 +169,7 @@ supported aircraft:
     numbers from [source](https://www.iso.org/standard/78864.html) Table I1 and
     Table I2) and CORSIA Carbon Intensity value (74 gCO<sub>2</sub>e/MJ from
     [source](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
-    Table 5) are used to calculate the jet fuel combustion to CO<sub>2</sub>
+    Table 5) are used to calculate the jet fuel combustion to CO<sub>2</sub>e
     conversion factor of 3.1894. The CORSIA Life Cycle Assessment methodology is
     used to calculate a WTT CO<sub>2</sub>e emissions factor of 0.6465 (WTT 15g
     CO<sub>2</sub>e/MJ added to the TTW 74 gCO<sub>2</sub>e/MJ Carbon Intensity
