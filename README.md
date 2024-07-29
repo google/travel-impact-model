@@ -166,8 +166,8 @@ supported aircraft:
     supported distance, or longer than the longest supported distance for that
     aircraft type.
 *   The Lower Heating Value from ISO 14083 (43.1 MJ/kg averaged over US and EU
-    numbers from [source](https://www.iso.org/standard/78864.html) Table I1 and
-    Table I2) and CORSIA Carbon Intensity value (74 gCO<sub>2</sub>e/MJ from
+    numbers from [source](https://www.iso.org/standard/78864.html) Table K1 and
+    Table K3) and CORSIA Carbon Intensity value (74 gCO<sub>2</sub>e/MJ from
     [source](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
     Table 5) are used to calculate the jet fuel combustion to CO<sub>2</sub>e
     conversion factor of 3.1894. The CORSIA Life Cycle Assessment methodology is
