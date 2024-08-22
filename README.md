@@ -30,14 +30,14 @@
 In this document we describe the modeling assumptions and input specifications
 behind the Travel Impact Model (TIM), a state of the art emission estimation
 model that Google’s Travel Sustainability team has compiled from several
-external data sources. The TIM aims at predicting carbon emissions for future
-flights to help travelers plan their travel.
+external data sources. The TIM aims at predicting greenhouse gas (GHG) emissions
+for future flights to help travelers plan their travel.
 
 ## Model overview
 
 For each flight, the TIM considers several factors, such as the Great Circle
 distance between the origin and destination airports and the aircraft type being
-used for the route. Actual carbon emissions at flight time may vary depending on
+used for the route. Actual GHG emissions at flight time may vary depending on
 factors not known at modeling time, such as speed and altitude of the aircraft,
 the actual flight route, and weather conditions at the time of flight.
 
@@ -506,7 +506,7 @@ for all cabin classes simplifies integration of TIM data with other datasets.
 
 ## Legal base for model data sharing
 
-The carbon emission estimate data are available via API under the
+The GHG emission estimate data are available via API under the
 [Creative Commons Attribution-ShareAlike CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 open source license
 ([legal code](https://creativecommons.org/licenses/by-sa/4.0/legalcode)).
@@ -617,7 +617,7 @@ Initial public version of the Travel Impact Model.
 
 ## Limitations
 
-The model described in this document produces estimates of carbon emissions.
+The model described in this document produces estimates of GHG emissions.
 Emission estimates aim to be representative of what the typical emissions for a
 flight matching the model inputs would be. Estimates might differ from actual
 emissions based on a number of factors.
