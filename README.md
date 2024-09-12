@@ -1,4 +1,4 @@
-## Travel Impact Model 1.9.1
+## Travel Impact Model 1.10.0
 
 #### (Implementation of the Travalyst Shared Framework by Google)
 
@@ -212,16 +212,24 @@ There is information for most commonly-used aircraft types in the EEA data, but
 some are missing. For missing aircraft types, one of the following alternatives
 is applied in ranked order:
 
-*   *Supported using the Piano-X data set:* If an aircraft type is supported in
-    the Piano-X data set and a comparable type is supported both in the Piano-X
+*   *Supported by correction factor:* If an aircraft type is supported in
+    another data set and a comparable type is supported both in the other
     and the EEA data set, a correction factor is derived by comparing the
-    Piano-X output for both types across a range of missions. The correction
+    output for both types across a range of missions. The correction
     factor will be applied to the LTO and CCD numbers of the comparable type in
-    the EEA database.
-*   *Supported by fallback to non-optimized aircraft type:* If there are
-    estimates in the EEA data set for an aircraft that is identical except for
-    the lack of optimizations such as winglets or sharklets, the non-optimized
-    counterpart is used for the estimate.
+    the EEA database. Two data sources are used for correction factors:
+    * For aircraft supported in EEA 2023 but not EEA 2019, derive it from EEA 2023.
+    * For all aircrafts with a winglet or sharklet variant for which no native data
+      exists (see [Appendix A](#bookmark=id.pbnw7e5sw0vi)), use a 3% discount factor
+      on top of EEA 2019 estimates. We are basing the 3% factor on a literature
+      review ([Airbus](https://aircraft.airbus.com/en/services/enhance/systems-and-airframe-upgrades/fuel-efficiency-solutions#:~:text=Sharklets%20can%20deliver%20fuel%20savings,as%20range%20and%2For%20payload.),
+    [FlightGlobal](https://www.flightglobal.com/dubai-09-a320s-sharklets-to-deliver-35-lower-fuel-burn-from-2012/90332.article),
+    [Boeing](http://www.boeing.ch/commercial/aeromagazine/articles/qtr_03_09/pdfs/AERO_Q309_article03.pdf),
+    [SimpleFlying](https://simpleflying.com/wing-tip-fuel-efficiency/),
+    [NASA](https://spinoff.nasa.gov/Spinoff2010/t_5.html),
+    [Cirium](https://www.cirium.com/thoughtcloud/impact-winglets-on-fuel-consumption-and-aircraft-emissions/),
+    [AviationBenefits](https://aviationbenefits.org/case-studies/wingtip-devices/),
+    [FlightGlobal](https://www.flightglobal.com/blended-winglets-give-bumper-737-fuel-burn-savings-/37980.article)).
 *   *Supported by fallback to previous generation aircraft type:* If there are
     estimates in the EEA data set for a previous generation aircraft type in the
     same family, from the same manufacturer, the previous generation aircraft is
@@ -229,6 +237,8 @@ is applied in ranked order:
 *   *Supported by fallback to least efficient aircraft in the family:* For
     umbrella codes that refer to a group of aircraft, the least efficient
     aircraft in the family will be assumed.
+*   *Supported by fallback to similar aircraft type:* If there are
+    estimates in the EEA data set for a similar aircraft, it is used for the estimate.
 *   *Not supported:* For aircraft types for which none of the cases above apply,
     there are no emissions estimates available.
 
@@ -241,7 +251,8 @@ Used for flight level emissions:
 
 *   EEA Report No 13/2019 1.A.3.a Aviation 1 Master emissions calculator 2019
     ([link](https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation-1/view))
-*   Piano-X aircraft database ([link](https://www.lissys.uk/PianoX.html))
+*   EMEP/EEA air pollutant emission inventory guidebook 2023 Annex 1
+    ([link](https://www.eea.europa.eu/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation.3/view))
 *   CORSIA Eligible Fuels Life Cycle Assessment Methodology
     ([link](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf))
 *   ISO 14083 ([link](https://www.iso.org/standard/78864.html))
@@ -539,6 +550,10 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
 
 ## Changelog
 
+### 1.10.0
+
+Migrating data sources for aircraft performance for some aircraft models.
+
 ### 1.9.1
 
 Expanding T-100 coverage to include US territories. See
@@ -765,43 +780,44 @@ delivery of jet fuel.
 
 Aircraft full name                              | IATA aircraft code | Mapping (ICAO aircraft code) | Support status
 ----------------------------------------------- | ------------------ | ---------------------------- | --------------
-Airbus A220-100                                 | 221                |                              | Supported via correction factor derived from Piano data
-Airbus A220-300                                 | 223                |                              | Supported via correction factor derived from Piano data
-Airbus A300-600 Freighter                       | ABY                | A306                         | Direct match in EEA
-Airbus A300-600/600C                            | AB6                | A306                         | Direct match in EEA
-Airbus A300B2/B4/C4                             | AB4                | A30B                         | Direct match in EEA
-Airbus A310                                     | 310                | A310                         | Direct match in EEA
-Airbus A310-300                                 | 313                | A310                         | Direct match in EEA
-Airbus A318                                     | 318                | A318                         | Direct match in EEA
+Airbus A220-100                                 | 221                | BCS1                         | Direct match in EEA 2023
+Airbus A220-300                                 | 223                | BCS3                         | Direct match in EEA 2023
+Airbus A300-600/600C                            | AB6                | A306                         | Direct match in EEA 2019
+Airbus A300B2/B4/C4                             | AB4                | A30B                         | Direct match in EEA 2019
+Airbus A310                                     | 310                | A310                         | Direct match in EEA 2019
+Airbus A310-300                                 | 313                | A310                         | Direct match in EEA 2019
+Airbus A318                                     | 318                | A318                         | Direct match in EEA 2019
+Airbus A318 (Sharklets)                         | 31A                |                              | Supported via static correction factor based on literature review
 Airbus A318/A319/A320/A321                      | 32S                | A321                         | Mapped to least efficient in family
-Airbus A319                                     | 319                | A319                         | Direct match in EEA
-Airbus A320-100/200                             | 320                | A320                         | Direct match in EEA
-Airbus A320neo                                  | 32N                |                              | Supported via correction factor derived from Piano data
-Airbus A321                                     | 321                | A321                         | Direct match in EEA
-Airbus A321neo                                  | 32Q                |                              | Supported via correction factor derived from Piano data
+Airbus A319                                     | 319                | A319                         | Direct match in EEA 2019
+Airbus A319 (Sharklets)                         | 31B                |                              | Supported via static correction factor based on literature review
+Airbus A320-100/200                             | 320                | A320                         | Direct match in EEA 2019
+Airbus A320neo                                  | 32N                | A20N                         | Supported via correction factor derived from EEA 2023 data
+Airbus A321                                     | 321                | A321                         | Direct match in EEA 2019
+Airbus A321neo                                  | 32Q                | A21N                         | Supported via correction factor derived from EEA 2023 data
 Airbus A330                                     | 330                | A332                         | Mapped to least efficient in family
-Airbus A330-200                                 | 332                | A332                         | Direct match in EEA
-Airbus A330-300                                 | 333                | A333                         | Direct match in EEA
-Airbus A330-900neo                              | 339                | A333                         | Supported via correction factor derived from Piano data
+Airbus A330-200                                 | 332                | A332                         | Direct match in EEA 2019
+Airbus A330-300                                 | 333                | A333                         | Direct match in EEA 2019
+Airbus A330-900neo                              | 339                | A333                         | Supported via correction factor derived from EEA 2023 data
 Airbus A340                                     | 340                | A345                         | Mapped to least efficient in family
-Airbus A340-300                                 | 343                | A343                         | Direct match in EEA
-Airbus A340-500                                 | 345                | A345                         | Direct match in EEA
-Airbus A340-600                                 | 346                | A346                         | Direct match in EEA
+Airbus A340-300                                 | 343                | A343                         | Direct match in EEA 2019
+Airbus A340-500                                 | 345                | A345                         | Direct match in EEA 2019
+Airbus A340-600                                 | 346                | A346                         | Direct match in EEA 2019
 Airbus A350                                     | 350                | A350                         | Mapped to least efficient in family
-Airbus A350-900                                 | 359                | A350                         | Direct match in EEA
+Airbus A350-900                                 | 359                | A350                         | Direct match in EEA 2019
 Airbus A380                                     | 380                | A380                         | Mapped to least efficient in family
-Airbus A380-800                                 | 388                | A380                         | Direct match in EEA
-Airbus A320 (Sharklets)                         | 32A                |                              | Supported via correction factor derived from Piano data
-Airbus A321 (Sharklets)                         | 32B                |                              | Supported via correction factor derived from Piano data
-Airbus A350-1000                                | 351                | A350                         | Supported via correction factor derived from Piano data
-Antonov AN-148-100                              | A81                | AN148                        | Direct match in EEA
-Antonov AN-24                                   | AN4                | AN24                         | Direct match in EEA
+Airbus A380-800                                 | 388                | A380                         | Direct match in EEA 2019
+Airbus A320 (Sharklets)                         | 32A                |                              | Supported via static correction factor based on literature review
+Airbus A321 (Sharklets)                         | 32B                |                              | Supported via static correction factor based on literature review
+Airbus A350-1000                                | 351                | A350                         | Supported via correction factor derived from EEA 2023 data
+Antonov AN-148-100                              | A81                | AN148                        | Direct match in EEA 2019
+Antonov AN-24                                   | AN4                | AN24                         | Direct match in EEA 2019
 Antonov AN-26/30/32                             | AN6                | AN32                         | Mapped to least efficient in family
-Antonov AN-32                                   | A32                | AN32                         | Direct match in EEA
+Antonov AN-32                                   | A32                | AN32                         | Direct match in EEA 2019
 ATR 42-300/320                                  | AT4                | ATR42                        | Mapped to similar model
-ATR 42-500                                      | AT5                | ATR42                        | Direct match in EEA
+ATR 42-500                                      | AT5                | ATR42                        | Direct match in EEA 2019
 ATR 42/ATR 72                                   | ATR                | ATR72                        | Mapped to least efficient in family
-ATR 72                                          | AT7                | ATR72                        | Direct match in EEA
+ATR 72                                          | AT7                | ATR72                        | Direct match in EEA 2019
 Avro Regional Jet Avroliner                     | ARJ                |                              | Not supported
 Avro Regional Jet RJ100 Avroliner               | AR1                |                              | Not supported
 Avro Regional Jet RJ85 Avroliner                | AR8                |                              | Not supported
@@ -810,60 +826,54 @@ Beechcraft 1900/1900C                           | BES                |          
 Beechcraft 1900D                                | BEH                |                              | Not supported
 Beechcraft C99 Airliner                         | BE9                |                              | Not supported
 Beechcraft Light Aircraft twin engine           | BET                |                              | Not supported
-Boeing 717-200                                  | 717                | B717                         | Direct match in EEA
+Boeing 717-200                                  | 717                | B717                         | Direct match in EEA 2019
 Boeing 737                                      | 737                | B734                         | Mapped to least efficient in family
-Boeing 737 Freighter                            | 73F                | B734                         | Mapped to least efficient in family
-Boeing 737-200                                  | 732                | B732                         | Direct match in EEA
-Boeing 737-200                                  | 73M                | B732                         | Direct match in EEA
-Boeing 737-200/200 Advanced                     | 73S                | B732                         | Direct match in EEA
-Boeing 737-300                                  | 733                | B733                         | Direct match in EEA
-Boeing 737-300                                  | 73N                | B733                         | Direct match in EEA
-Boeing 737-300 (winglets)                       | 73C                | B733                         | Mapped to non-optimized aircraft
-Boeing 737-400                                  | 734                | B734                         | Direct match in EEA
-Boeing 737-400                                  | 73Q                | B734                         | Direct match in EEA
-Boeing 737-500                                  | 735                | B735                         | Direct match in EEA
-Boeing 737-500 (winglets)                       | 73E                | B735                         | Mapped to non-optimized aircraft
-Boeing 737-600                                  | 736                | B736                         | Direct match in EEA
-Boeing 737-700                                  | 73G                | B737                         | Direct match in EEA
-Boeing 737-700 (winglets)                       | 73W                |                              | Supported via correction factor derived from Piano data
-Boeing 737-800                                  | 738                | B738                         | Direct match in EEA
-Boeing 737-800 (Scimitar Winglets)              | 7S8                |                              | Supported via correction factor derived from Piano data
-Boeing 737-800 (winglets)                       | 73H                |                              | Supported via correction factor derived from Piano data
-Boeing 737-900                                  | 739                | B739                         | Direct match in EEA
-Boeing 737-900 (winglets)                       | 73J                | B739                         | Mapped to non-optimized aircraft
-Boeing 737MAX 8                                 | 7M8                |                              | Supported via correction factor derived from Piano data
-Boeing 737MAX 9                                 | 7M9                |                              | Supported via correction factor derived from Piano data
+Boeing 737-200                                  | 732                | B732                         | Direct match in EEA 2019
+Boeing 737-200                                  | 73M                | B732                         | Direct match in EEA 2019
+Boeing 737-200/200 Advanced                     | 73S                | B732                         | Direct match in EEA 2019
+Boeing 737-300                                  | 733                | B733                         | Direct match in EEA 2019
+Boeing 737-300                                  | 73N                | B733                         | Direct match in EEA 2019
+Boeing 737-300 (Winglets)                       | 73C                | B733                         | Supported via static correction factor based on literature review
+Boeing 737-400                                  | 734                | B734                         | Direct match in EEA 2019
+Boeing 737-400                                  | 73Q                | B734                         | Direct match in EEA 2019
+Boeing 737-500                                  | 735                | B735                         | Direct match in EEA 2019
+Boeing 737-500 (Winglets)                       | 73E                | B735                         | Supported via static correction factor based on literature review
+Boeing 737-600                                  | 736                | B736                         | Direct match in EEA 2019
+Boeing 737-700                                  | 73G                | B737                         | Direct match in EEA 2019
+Boeing 737-700 (Winglets)                       | 73W                |                              | Supported via static correction factor based on literature review
+Boeing 737-800                                  | 738                | B738                         | Direct match in EEA 2019
+Boeing 737-800 (Scimitar Winglets)              | 7S8                |                              | Supported via static correction factor based on literature review
+Boeing 737-800 (Winglets)                       | 73H                |                              | Supported via static correction factor based on literature review
+Boeing 737-900                                  | 739                | B739                         | Direct match in EEA 2019
+Boeing 737-900 (Winglets)                       | 73J                | B739                         | Supported via static correction factor based on literature review
+Boeing 737MAX 8                                 | 7M8                |                              | Supported via correction factor derived from EEA 2023 data
+Boeing 737MAX 9                                 | 7M9                |                              | Supported via correction factor derived from EEA 2023 data
 Boeing 747                                      | 747                | B744                         | Mapped to least efficient in family
-Boeing 747 Freighter                            | 74F                | B744                         | Mapped to least efficient in family
-Boeing 747-400                                  | 744                | B744                         | Direct match in EEA
-Boeing 747-400 Mixed                            | 74E                | B744                         | Direct match in EEA
-Boeing 747-400F Freighter                       | 74Y                | B744                         | Direct match in EEA
-Boeing 747-8F (Freighter)                       | 74N                | B744                         | Mapped onto older model
+Boeing 747-400                                  | 744                | B744                         | Direct match in EEA 2019
+Boeing 747-400 Mixed                            | 74E                | B744                         | Direct match in EEA 2019
 Boeing 747-8I                                   | 74H                | B744                         | Mapped onto older model
 Boeing 757                                      | 757                | B753                         | Mapped to least efficient in family
-Boeing 757-200                                  | 752                | B752                         | Direct match in EEA
-Boeing 757-200 (winglets)                       | 75W                |                              | Supported via correction factor derived from Piano data
-Boeing 757-300                                  | 753                | B753                         | Direct match in EEA
-Boeing 757-300 (winglets)                       | 75T                | B753                         | Mapped to non-optimized aircraft
+Boeing 757-200                                  | 752                | B752                         | Direct match in EEA 2019
+Boeing 757-200 (Winglets)                       | 75W                |                              | Supported via static correction factor based on literature review
+Boeing 757-300                                  | 753                | B753                         | Direct match in EEA 2019
+Boeing 757-300 (Winglets)                       | 75T                | B753                         | Supported via static correction factor based on literature review
 Boeing 767                                      | 767                | B764                         | Mapped to least efficient in family
-Boeing 767-200                                  | 762                | B762                         | Direct match in EEA
-Boeing 767-300                                  | 763                | B763                         | Direct match in EEA
-Boeing 767-300 (winglets)                       | 76W                |                              | Supported via correction factor derived from Piano data
-Boeing 767-400                                  | 764                | B764                         | Direct match in EEA
+Boeing 767-200                                  | 762                | B762                         | Direct match in EEA 2019
+Boeing 767-300                                  | 763                | B763                         | Direct match in EEA 2019
+Boeing 767-300 (Winglets)                       | 76W                |                              | Supported via static correction factor based on literature review
+Boeing 767-400                                  | 764                | B764                         | Direct match in EEA 2019
 Boeing 777                                      | 777                | B773                         | Mapped to least efficient in family
-Boeing 777 Freighter                            | 77F                | B773                         | Mapped to least efficient in family
-Boeing 777-200/200ER                            | 772                | B772                         | Direct match in EEA
-Boeing 777-200F Freighter                       | 77X                | B772                         | Direct match in EEA
+Boeing 777-200/200ER                            | 772                | B772                         | Direct match in EEA 2019
 Boeing 777-200LR                                | 77L                | B772                         | Mapped to similar model
-Boeing 777-300                                  | 773                | B773                         | Direct match in EEA
-Boeing 777-300ER                                | 77W                | B77W                         | Direct match in EEA
+Boeing 777-300                                  | 773                | B773                         | Direct match in EEA 2019
+Boeing 777-300ER                                | 77W                | B77W                         | Direct match in EEA 2019
 Boeing 787                                      | 787                | B789                         | Mapped to least efficient in family
-Boeing 787-10                                   | 781                |                              | Supported via correction factor derived from Piano data
-Boeing 787-8                                    | 788                | B788                         | Direct match in EEA
-Boeing 787-9                                    | 789                | B789                         | Direct match in EEA
+Boeing 787-10                                   | 781                |                              | Supported via correction factor derived from EEA 2023 data
+Boeing 787-8                                    | 788                | B788                         | Direct match in EEA 2019
+Boeing 787-9                                    | 789                | B789                         | Direct match in EEA 2019
 Bombardier CS100                                | CS1                |                              | Not supported
 Bombardier CS300                                | CS3                |                              | Not supported
-British Aerospace 146                           | 146                | BAE146                       | Direct match in EEA
+British Aerospace 146                           | 146                | BAE146                       | Direct match in EEA 2019
 British Aerospace Jetstream 31/32/41            | JST                |                              | Not supported
 British Aerospace Jetstream 32                  | J32                |                              | Not supported
 British Aerospace Jetstream 41                  | J41                |                              | Not supported
@@ -871,49 +881,46 @@ Canadair Regional Jet                           | CRJ                | CS900RJ  
 Canadair Regional Jet 100                       | CR1                |                              | Not supported
 Canadair Regional Jet 1000                      | CRK                |                              | Not supported
 Canadair Regional Jet 200                       | CR2                |                              | Not supported
-Canadair Regional Jet 550                       | CR5                |                              | Supported via correction factor derived from Piano data
-Canadair Regional Jet 700                       | CR7                | CS700RJ                      | Direct match in EEA
-Canadair Regional Jet 900                       | CR9                | CS900RJ                      | Direct match in EEA
-Cessna (Light Aircraft - single engine)         | CNC                | C208                         | Direct match in EEA
-Cessna (Light Aircraft)                         | CNA                | C208                         | Direct match in EEA
-Cessna 208B Freighter                           | CNF                | C208                         | Direct match in EEA
-Cessna Citation                                 | CNJ                | C500                         | Direct match in EEA
+Canadair Regional Jet 550                       | CR5                | CS700RJ                      | Mapped to similar model
+Canadair Regional Jet 700                       | CR7                | CS700RJ                      | Direct match in EEA 2019
+Canadair Regional Jet 900                       | CR9                | CS900RJ                      | Direct match in EEA 2019
+Cessna (Light Aircraft - single engine)         | CNC                | C208                         | Direct match in EEA 2019
+Cessna (Light Aircraft)                         | CNA                | C208                         | Direct match in EEA 2019
+Cessna Citation                                 | CNJ                | C500                         | Direct match in EEA 2019
 Comac ARJ21-700                                 | C27                |                              | Not supported
-Convair 440/580/600/640 Freighter               | CVF                |                              | Not supported
 De Havilland-Bombardier DHC-4 Caribou           | DHC                |                              | Not supported
-De Havilland-Bombardier DHC-6 Twin Otter        | DHT                | DHC6                         | Direct match in EEA
-De Havilland-Bombardier DHC-8 Dash 8            | DH8                | DHC8                         | Direct match in EEA
-De Havilland-Bombardier DHC-8 Dash 8 Series 200 | DH2                | DHC8                         | Mapped to non-optimized aircraft
-De Havilland-Bombardier DHC-8 Dash 8 Series 300 | DH3                | DHC8                         | Mapped to non-optimized aircraft
-De Havilland-Bombardier DHC-8 Dash 8 Series 400 | DH4                | DHC8                         | Mapped to non-optimized aircraft
-Embraer 170 Regional Jet                        | E70                | E170                         | Direct match in EEA
-Embraer 175 (Enhanced Winglets)                 | E7W                |                              | Supported via correction factor derived from Piano data
-Embraer 175 Regional Jet                        | E75                | E175                         | Direct match in EEA
+De Havilland-Bombardier DHC-6 Twin Otter        | DHT                | DHC6                         | Direct match in EEA 2019
+De Havilland-Bombardier DHC-8 Dash 8            | DH8                | DHC8                         | Direct match in EEA 2019
+De Havilland-Bombardier DHC-8 Dash 8 Series 200 | DH2                | DHC8                         | Mapped to similar model
+De Havilland-Bombardier DHC-8 Dash 8 Series 300 | DH3                | DHC8                         | Mapped to similar model
+De Havilland-Bombardier DHC-8 Dash 8 Series 400 | DH4                | DHC8                         | Mapped to similar model
+Embraer 170 Regional Jet                        | E70                | E170                         | Direct match in EEA 2019
+Embraer 175 (Enhanced Winglets)                 | E7W                |                              | Supported via correction factor derived from EEA 2023 data
+Embraer 175 Regional Jet                        | E75                | E175                         | Direct match in EEA 2019
 Embraer 190 E2                                  | 290                | E190                         | Mapped onto older model
-Embraer 190 Regional Jet                        | E90                | E190                         | Direct match in EEA
+Embraer 190 Regional Jet                        | E90                | E190                         | Direct match in EEA 2019
 Embraer 195 E2                                  | 295                | E195                         | Mapped onto older model
-Embraer 195 Regional Jet                        | E95                | E195                         | Direct match in EEA
-Embraer EMB-110 Bandeirante                     | EMB                | E110                         | Direct match in EEA
-Embraer EMB-120 Brasilia                        | EM2                | E120                         | Direct match in EEA
-Embraer ERJ-135 Regional Jet                    | ER3                | E135                         | Direct match in EEA
+Embraer 195 Regional Jet                        | E95                | E195                         | Direct match in EEA 2019
+Embraer EMB-110 Bandeirante                     | EMB                | E110                         | Direct match in EEA 2019
+Embraer EMB-120 Brasilia                        | EM2                | E120                         | Direct match in EEA 2019
+Embraer ERJ-135 Regional Jet                    | ER3                | E135                         | Direct match in EEA 2019
 Embraer ERJ-135/140/145 Regional Jet            | ERJ                |                              | Mapped to least efficient in family
-Embraer ERJ-140 Regional Jet                    | ERD                | E145                         | Direct match in EEA
-Embraer ERJ-145 Regional Jet                    | ER4                | E145                         | Direct match in EEA
+Embraer ERJ-140 Regional Jet                    | ERD                | E145                         | Direct match in EEA 2019
+Embraer ERJ-145 Regional Jet                    | ER4                | E145                         | Direct match in EEA 2019
 Embraer RJ-170/175/190/195 Regional Jet         | EMJ                |                              | Mapped to least efficient in family
 Fairchild (Swearingen) Metro/Merlin             | SWM                |                              | Not supported
 Fairchild Dornier 328JET                        | FRJ                |                              | Not supported
-Fokker 100                                      | 100                | F100                         | Direct match in EEA
-Fokker 50                                       | F50                | F50                          | Direct match in EEA
-Fokker 70                                       | F70                | F70                          | Direct match in EEA
-Ilyushin IL-76                                  | IL7                | IL76                         | Direct match in EEA
-Ilyushin IL-96-300                              | IL9                | IL96                         | Direct match in EEA
-LET L410 Turbolet                               | L4T                | L410                         | Direct match in EEA
-McDonnell Douglas MD-11 Freighter               | M1F                | MD11                         | Direct match in EEA
+Fokker 100                                      | 100                | F100                         | Direct match in EEA 2019
+Fokker 50                                       | F50                | F50                          | Direct match in EEA 2019
+Fokker 70                                       | F70                | F70                          | Direct match in EEA 2019
+Ilyushin IL-76                                  | IL7                | IL76                         | Direct match in EEA 2019
+Ilyushin IL-96-300                              | IL9                | IL96                         | Direct match in EEA 2019
+LET L410 Turbolet                               | L4T                | L410                         | Direct match in EEA 2019
 McDonnell Douglas MD-80                         | M80                |                              | Not supported
 McDonnell Douglas MD-83                         | M83                |                              | Not supported
 McDonnell Douglas MD-87                         | M87                |                              | Not supported
 McDonnell Douglas MD-88                         | M88                |                              | Not supported
-McDonnell Douglas MD-90                         | M90                | MD90                         | Direct match in EEA
+McDonnell Douglas MD-90                         | M90                | MD90                         | Direct match in EEA 2019
 Pilatus Brit-Norm BN-2A/B ISL/BN-2T             | BNI                |                              | Not supported
 SAAB 2000                                       | S20                |                              | Not supported
 Saab 340B                                       | SFB                |                              | Not supported
