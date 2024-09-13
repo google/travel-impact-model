@@ -220,7 +220,7 @@ is applied in ranked order:
     the EEA database. Two data sources are used for correction factors:
     * For aircraft supported in EEA 2023 but not EEA 2019, derive it from EEA 2023.
     * For all aircrafts with a winglet or sharklet variant for which no native data
-      exists (see [Appendix A](#bookmark=id.pbnw7e5sw0vi)), use a 3% discount factor
+      exists (see [Appendix A](#appendix-a-aircraft-type-support)), use a 3% discount factor
       on top of EEA 2019 estimates. We are basing the 3% factor on a literature
       review ([Airbus](https://aircraft.airbus.com/en/services/enhance/systems-and-airframe-upgrades/fuel-efficiency-solutions#:~:text=Sharklets%20can%20deliver%20fuel%20savings,as%20range%20and%2For%20payload.),
     [FlightGlobal](https://www.flightglobal.com/dubai-09-a320s-sharklets-to-deliver-35-lower-fuel-burn-from-2012/90332.article),
@@ -242,7 +242,7 @@ is applied in ranked order:
 *   *Not supported:* For aircraft types for which none of the cases above apply,
     there are no emissions estimates available.
 
-See [Appendix A](#bookmark=id.pbnw7e5sw0vi) for a table with detailed
+See [Appendix A](#appendix-a-aircraft-type-support) for a table with detailed
 information about aircraft type support status.
 
 #### Data sources
