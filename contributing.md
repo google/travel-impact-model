@@ -1,7 +1,7 @@
 # How to Contribute
 
-We are welcoming feedback and enquiries. Please get in touch using this
-[form](https://support.google.com/travel/contact/tim?pcff=category:travel_impact_model_(TIM)_specifications).
+We welcome feedback and enquiries. Please get in touch using this
+[form](https://support.google.com/travel/contact/tim).
 
 ## Community Guidelines
 
