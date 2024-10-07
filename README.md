@@ -1,37 +1,14 @@
 ## Travel Impact Model 1.10.0
 
-#### (Implementation of the Travalyst Shared Framework by Google)
-
-## Table of contents
-
-*   [Background](#background)
-*   [Model overview](#model-overview)
-    *   [Flight level emission estimates](#flight-level-emission-estimates)
-        *   [Flight level CO<sub>2</sub>e estimates](#flight-level-co2e-estimates)
-        *   [Data sources](#data-sources)
-    *   [Breakdown from flight level to individual level](#breakdown-from-flight-level-to-individual-level)
-        *   [Data sources](#data-sources-1)
-        *   [Outlier detection and basic correctness checking](#outlier-detection-and-basic-correctness-checking)
-        *   [Factors details](#factors-details)
-*   [Example emission estimation](#example-emission-estimation)
-*   [Legal base for model data sharing](#legal-base-for-model-data-sharing)
-*   [API access](#api-access)
-*   [Versioning](#versioning)
-*   [Changelog](#changelog)
-*   [Limitations](#limitations)
-*   [Data quality](#data-quality)
-*   [Contact](#contact)
-*   [Glossary](#glossary)
-*   [Appendix](#appendix)
-    *   [Appendix A: Aircraft type support](#appendix-a-aircraft-type-support)
+http://www.travelimpactmodel.org
 
 ## Background
 
 In this document we describe the modeling assumptions and input specifications
 behind the Travel Impact Model (TIM), a state of the art emission estimation
-model that Google’s Travel Sustainability team has compiled from several
-external data sources. The TIM aims at predicting greenhouse gas (GHG) emissions
-for future flights to help travelers plan their travel.
+model that Google's Travel Sustainability team has compiled from several
+external data sources. The TIM predicts greenhouse gas (GHG) emissions for
+future flights to help travelers plan their travel.
 
 ## Model overview
 
@@ -78,80 +55,23 @@ The EEA model takes the efficiency of the aircraft into account. As shown in
 Figure 1, a typical flight is modeled in two stages: *take off and landing*
 (LTO, yellow) and *cruise, climb, and descend* (CCD, blue).
 
-![alt_text](images/image3.png "image_tooltip")
+![Fixed fuel burn allocated during LTO, variable during CCD](images/image3.png)
 
-<p style="text-align: right">
-(Fig 1)</p>
+(Fig 1)
 
 For each stage, there are aircraft-specific and distance-specific fuel burn
 estimates. Table 1 shows an example fuel burn forecast for a Boeing 787-9 (B789)
 aircraft:
 
-<table>
-  <tr>
-   <td style="background-color: null"><code>Aircraft</code>
-   </td>
-   <td style="background-color: null"><code>Distance (nm)</code>
-   </td>
-   <td style="background-color: null"><code>LTO fuel forecast (kg)</code>
-   </td>
-   <td style="background-color: null"><code>CCD fuel forecast (kg)</code>
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null"><code>B789</code>
-   </td>
-   <td style="background-color: null"><code>500</code>
-   </td>
-   <td style="background-color: null"><code>1,727</code>
-   </td>
-   <td style="background-color: null"><code>5,815</code>
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null"><code>B789</code>
-   </td>
-   <td style="background-color: null"><code>1000</code>
-   </td>
-   <td style="background-color: null"><code>1,727</code>
-   </td>
-   <td style="background-color: null"><code>10,770</code>
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null"><code>B789</code>
-   </td>
-   <td style="background-color: null"><code>...</code>
-   </td>
-   <td style="background-color: null"><code>...</code>
-   </td>
-   <td style="background-color: null"><code>...</code>
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null"><code>B789</code>
-   </td>
-   <td style="background-color: null"><code>5000</code>
-   </td>
-   <td style="background-color: null"><code>1,727</code>
-   </td>
-   <td style="background-color: null"><code>52,375</code>
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null"><code>B789</code>
-   </td>
-   <td style="background-color: null"><code>5500</code>
-   </td>
-   <td style="background-color: null"><code>1,727</code>
-   </td>
-   <td style="background-color: null"><code>57,430</code>
-   </td>
-  </tr>
-</table>
+ Aircraft  | Distance (nm)  | LTO fuel forecast (kg)  | CCD fuel forecast (kg)
+-----------|---------------:|------------------------:|------------------------:
+ B789      | 500            | 1727                    | 5815
+ B789      | 1000           | 1727                    | 10770
+ B789      | ...            | ...                     | ...
+ B789      | 5000           | 1727                    | 52375
+ B789      | 5500           | 1727                    | 57430
 
-<p style="text-align: right">
-(Table 1)</p>
+(Table 1)
 
 By using these numbers together with linear interpolation or extrapolation, it
 is possible to deduce the emission estimate for flights of any length on
@@ -178,28 +98,10 @@ supported aircraft:
     [source](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
     page 22 and Table 7). The factors used are as follows:
 
-<table>
-  <tr>
-   <td style="background-color: null"><code>kg CO<sub>2</sub>e/kg of A1 jet fuel burn</code>
-   </td>
-   <td style="background-color: null"><code>TTW [kg CO<sub>2</sub>e/kg]</code>
-   </td>
-   <td style="background-color: null"><code>WTT [kg CO<sub>2</sub>e/kg]</code>
-   </td>
-   <td style="background-color: null"><code>WTW [kg CO<sub>2</sub>e/kg]</code>
-   </td>
-  </tr>
-  <tr>
-   <td style="background-color: null"><code>CORSIA and ISO</code>
-   </td>
-   <td style="background-color: null"><code>3.1894</code>
-   </td>
-   <td style="background-color: null"><code>0.6465</code>
-   </td>
-   <td style="background-color: null"><code>3.8359</code>
-   </td>
-  </tr>
-</table>
+ kg CO<sub>2</sub>e/kg of A1 jet fuel burn    | TTW [kg CO<sub>2</sub>e/kg]    | WTT [kg CO<sub>2</sub>e/kg]    | WTW [kg CO<sub>2</sub>e/kg]
+----------------------------------------------|--------------------------------|--------------------------------|-----------------------------
+ CORSIA and ISO                               | 3.1894                         | 0.6465                         | 3.8359
+
 
 CO<sub>2</sub>e is short for CO<sub>2</sub> equivalent and includes Kyoto Gases
 (GHG) as described
@@ -259,9 +161,10 @@ Used for flight level emissions:
 
 ### Breakdown from flight level to individual level
 
-In addition to predicting a flight’s emissions, it is possible to estimate the
-emissions for an individual seat on that flight. To perform this estimate, it’s
-necessary to perform an individual breakdown based on three relevant factors:
+In addition to predicting a flight's emissions, it is possible to estimate the
+emissions for an individual passenger on that flight. To perform this estimate,
+it's necessary to perform an individual breakdown based on three relevant
+factors:
 
 1.  Number of total seats on the plane in each seating class (first, business,
     premium economy, economy)
@@ -306,12 +209,15 @@ reference seat configurations for the aircraft are performed, specifically:
 *   The *calculated total seat area* for a flight is the total available seating
     area. This is calculated based on seating data and seating class factors.
     For example, the total seat area for a wide-body aircraft would be:
-    *   `1.0 * num_economy_class_seats +`
-        <br/>`1.5 * num_premium_economy_class_seats +`
-        <br/>`4.0 * num_business_class_seats +`
-        <br/>`5.0 * num_first_class_seats`
+
+        1.0 * num_economy_class_seats +
+        1.5 * num_premium_economy_class_seats +
+        4.0 * num_business_class_seats +
+        5.0 * num_first_class_seats
+
 *   The *reference total seat area* for an aircraft is roughly the median total
     seat area.
+
 *   During a *comparison* step: If the *calculated total seat area* for a given
     flight is within certain boundaries of the reference for that aircraft, the
     filed seating data from published flight schedules is used. Otherwise the
@@ -326,22 +232,20 @@ Seating parameters follow
 An analysis of seat pitch and width in each seating class in typical plane
 configurations confirmed the accuracy of these factors.
 
-*   Narrow-body aircraft
-    *   Economy and Premium Economy **1**
-    *   Business and First **1.5**
-*   Wide-body aircraft
-    *   Economy **1**
-    *   Premium Economy **1.5**
-    *   Business **4**
-    *   First **5**
+| Cabin Class     | Narrow-body aircraft | Wide-body aircraft |
+|-----------------|----------------------|--------------------|
+| Economy         | 1                    | 1                  |
+| Premium Economy | 1                    | 1.5                |
+| Business        | 1.5                  | 4                  |
+| First           | 1.5                  | 5                  |
 
 **Load factors**
 
 Passenger load factors are predicted based on historical passenger statistics.
-TIM uses a tiered approach to determine passenger load factors. High resolution,
-specific data (i.e. by route) is preferred where available, and in the absence
-of more granular data, the model falls back to a generic value (i.e. global
-default).
+The TIM uses a tiered approach to determine passenger load factors. High
+resolution, specific data (i.e. by route) is preferred where available, and in
+the absence of more granular data, the model falls back to a generic value (i.e.
+global default).
 
 Tier 1: Highly specific passenger load factors
 
@@ -372,8 +276,8 @@ Tier 1: Highly specific passenger load factors
 Tier 2: Global default passenger load factor
 
 *   For all other flights for which an equivalent public-domain dataset with
-    similar granularity is not currently available, TIM falls back to use a load
-    factor value of **84.5%**. This value is derived from
+    similar granularity is not currently available, the TIM falls back to use a
+    load factor value of **84.5%**. This value is derived from
     [historical data for the U.S.](https://fred.stlouisfed.org/series/LOADFACTOR)
     from 2019.
 *   An analysis of load factors sourced from publicly available airline investor
@@ -402,118 +306,130 @@ and [ch-aviation](https://www.ch-aviation.com/)
 
 ## Example emission estimation
 
-Let’s consider the following flight parameters:
+For this example, we'll use a flight from Zurich (`ZRH`) to San Francisco
+(`SFO`) on a `Boeing 787-9` aircraft with the following seating configuration.
 
-*   Origin: Zurich ZRH
-*   Destination: San Francisco SFO
-*   Aircraft: Boeing 787-9
-    *   Economy seats: 188
-    *   Premium Economy seats: 21
-    *   Business seats: 48
-    *   First seats: 0
+| Cabin Class     | Seats |
+|-----------------|------:|
+| Economy         | 188   |
+| Premium Economy | 21    |
+| Business        | 48    |
+| First           | 0     |
 
-To get the total emissions for a flight, let’s follow the process below:
+To get the total emissions for the flight, let's follow the process below:
 
-1.  Calculate great circle distance between ZRH and SFO: 9369 km (= 5058.9
+1.  Calculate great circle distance between ZRH and SFO: `9369 km` (= 5058.9
     nautical miles)
+
 2.  Look up the static LTO numbers and the distance-based CCD number from
     aircraft performance data (see Table 1), and interpolate fuel burn for a
     9369 km long flight:
-    *   LTO 1727 kg of fuel burn
-    *   CCD 52970 kg of fuel burn calculated
-        *   52375 + (5058.9 - 5000) * (57430 - 52375) / (5500 - 5000) = 52970
+    *   LTO `1727 kg` of fuel burn
+    *   CCD `52970 kg` of fuel burn calculated
+
+            52375 + (5058.9 - 5000) * (57430 - 52375) / (5500 - 5000) = 52970
+
 3.  Sum LTO and CCD number for total flight-level result:
-    *   1727 kg + 52970 kg = 54697 kg of fuel burn
+
+        1727 kg + 52970 kg = 54697 kg of fuel burn
+
 4.  Convert from fuel burn to CO<sub>2</sub>e emissions for total flight-level
     result:
-    *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 54697 * 0.6465 =
-        35362
-    *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 54697 * 3.1894 =
-        174451
-    *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: (54697 *
-        0.6465) + (54697 * 3.1894) = 209812
+    *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: `54697 * 0.6465 =
+        35362`
+    *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: `54697 * 3.1894 =
+        174451`
+    *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: `(54697 *
+        0.6465) + (54697 * 3.1894) = 209812`
 
-Once the total flight emissions are computed, let’s compute the per passenger
+Once the total flight emissions are computed, let's compute the per passenger
 break down:
 
 1.  Determine which seating class factors to use for the given flight. In the
-    ZRH-SFO example, we will use the wide-body factors (Boeing 787-9).
+    `ZRH-SFO` example, we will use the wide-body factors (`Boeing 787-9`).
 2.  Calculate the equivalent capacity of the aircraft according to the following
-    \
-    C = first\_class\_seats \* first\_class\_multiplier + business\_class\_seats
-    \* business\_class\_multiplier + …
-    *   In this specific example, the estimated area is: \
-        0 \* 5 + 48 \* 4 + 1.5 \* 21 + 188 \* 1 = 411.5
+
+        C = first_class_seats * first_class_multiplier +
+            business_class_seats + business_class_multiplier +
+            …
+
+    In this specific example, the estimated area is:
+
+        0 * 5 + 48 * 4 + 1.5 * 21 + 188 * 1 = 411.5
+
 3.  Divide the total CO<sub>2</sub>e emissions by the equivalent capacity
     calculated above to get the CO<sub>2</sub>e emissions per economy passenger.
-    *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 35362 / 411.5 =
-        85.934
-    *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 174451 / 411.5 =
-        423.939
-    *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 85.934 +
-        423.939 = 509.873
+    *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
+        `35362 / 411.5 = 85.934`
+    *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
+        `174451 / 411.5 = 423.939`
+    *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
+        `85.934 + 423.939 = 509.873`
+
 4.  Emissions per passenger for other cabins can be derived by multiplying by
     the corresponding cabin factor.
     *   First:
-        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934 * 5 =
-            429.67
-        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939 * 5 =
-            2119.695
-        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873 * 5 =
-            2549.365
+        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
+            `85.934 * 5 = 9.67`
+        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
+            `423.939 * 5 = 9.695`
+        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
+            `509.873 * 5 = 9.365`
     *   Business:
-        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934 * 4 =
-            343.736
-        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939 * 4 =
-            1695.756
-        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873 * 4 =
-            2039.492
+        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
+            `85.934 * 4 = 3.736`
+        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
+            `423.939 * 4 = 5.756`
+        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
+            `509.873 * 4 = 9.492`
     *   Premium Economy:
-        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934 *
-            1.5 = 128.901
-        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939 *
-            1.5 = 635.909
-        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873 *
-            1.5 = 764.81
+        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
+            `85.934 * 1.5 = 128.901`
+        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
+            `423.939 * 1.5 = 635.909`
+        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
+            `509.873 * 1.5 = 764.81`
     *   Economy:
-        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934
-        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939
-        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873
+        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: `85.934`
+        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: `423.939`
+        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: `509.873`
+
 5.  Scale to estimated load factor 0.845 by apportioning emissions to occupied
     seats:
     *   First:
-        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 429.67 /
-            0.845 = 508.485
-        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 2119.695 /
-            0.845 = 2508.515
-        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 2549.365 /
-            0.845 = 3017
+        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
+            `429.67 / 0.845 = 508.485`
+        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
+            `2119.695 / 0.845 = 2508.515`
+        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
+            `2549.365 / 0.845 = 3017`
     *   Business:
-        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 343.736 /
-            0.845 = 406.788
-        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 1695.756 /
-            0.845 = 2006.812
-        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 2039.492 /
-            0.845 = 2413.6
+        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
+            `343.736 / 0.845 = 406.788`
+        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
+            `1695.756 / 0.845 = 2006.812`
+        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
+            `2039.492 / 0.845 = 2413.6`
     *   Premium Economy:
-        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 128.901 /
-            0.845 = 152.546
-        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 635.909 /
-            0.845 = 752.555
-        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 764.81 /
-            0.845 = 905.101
+        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
+            `128.901 / 0.845 = 152.546`
+        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
+            `635.909 / 0.845 = 752.555`
+        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
+            `764.81 / 0.845 = 905.101`
     *   Economy:
-        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e: 85.934 /
-            0.845 = 101.697
-        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e: 423.939 /
-            0.845 = 501.703
-        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e: 509.873 /
-            0.845 = 603.4
+        *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
+            `85.934 / 0.845 = 101.697`
+        *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
+            `423.939 / 0.845 = 501.703`
+        *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
+            `509.873 / 0.845 = 603.4`
 
 Note that the model generates emission estimates for all cabin classes,
 including cabin classes where the seat count is zero, as cabin classifications
 are not always consistent across data providers. Therefore, providing estimates
-for all cabin classes simplifies integration of TIM data with other datasets.
+for all cabin classes simplifies integration of the TIM's data with other
+datasets.
 
 ## Legal base for model data sharing
 
@@ -586,7 +502,7 @@ emissions factor 0.6465. Reference:
 
 Updating the jet fuel combustion to CO<sub>2</sub> conversion factor from 3.15
 based on the EEA methodology to 3.1672 to align with the
-[CORSIA methodology’s](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
+[CORSIA methodology's](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
 recommended factor.
 
 ### 1.6.0
@@ -610,15 +526,15 @@ Following recent discussions with academic and industry partners, we are
 adjusting the TIM to focus on CO<sub>2</sub> emissions. While we strongly
 believe in including non-CO<sub>2</sub> effects in the model long-term, the
 details of how and when to include these factors requires more input from our
-stakeholders as part of a governance model that’s in development. With this
+stakeholders as part of a governance model that's in development. With this
 change, we are provisionally removing contrails effects from our CO<sub>2</sub>e
 estimates but will keep the labeling as “CO<sub>2</sub>e” in the model to ensure
 future compatibility.
 
 We believe CO<sub>2</sub>e factors are critical to include in the model, given
-the emphasis on them in the IPCC’s AR6 report. We want to make sure that when we
+the emphasis on them in the IPCC's AR6 report. We want to make sure that when we
 do incorporate them into the model, we have a strong plan to account for time of
-day and regional variations in contrails’ warming impact. We are committed to
+day and regional variations in contrails' warming impact. We are committed to
 providing consumers the most accurate information as they make informed choices
 about their travel options.
 
@@ -692,7 +608,7 @@ and 40%.
 
 ## Contact
 
-We are welcoming feedback and enquiries. Please get in touch using this
+We welcome feedback and enquiries. Please get in touch using this
 [form](https://support.google.com/travel/contact/tim?pcff=category:travel_impact_model_\(TIM\)_specifications).
 
 ## Glossary
@@ -731,7 +647,7 @@ atmospheric temperatures, water vapor and clouds.
 **European Environment Agency (EEA):** An agency of the European Union whose
 task is to provide sound, independent information on the environment.
 
-**Google’s Travel Sustainability team**: A team at Google focusing on travel
+**Google's Travel Sustainability team**: A team at Google focusing on travel
 sustainability, based in Zurich (Switzerland) and Cambridge (U.S.), with the
 goal to enable users to make more sustainable travel choices.
 
