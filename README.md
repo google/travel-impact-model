@@ -606,6 +606,36 @@ The
 factors between 5 and 10%. The CCD factor uncertainty is estimated between 15
 and 40%.
 
+## How to cite TIM in publications
+
+You are welcome to use the Travel Impact Model (TIM) in your publications.
+When referencing the TIM, please cite it as in the following example:
+
+> Google. (2022, April). *Travel Impact Model (TIM)* (Version A.B.C.YYYYMMDD)
+  [Computer software]. Retrieved September 28, 2024 via API,
+  https://github.com/google/travel-impact-model
+
+The TIM is a dynamic model that is regularly updated with new data and
+methodologies.  To ensure that others can access the same data and calculations
+you used, it is essential to include the version number and retrieval date in
+your citation.
+
+**BibTeX example:**
+
+```bibtex
+@misc{google_tim_2022,
+  institution = {Google},
+  title = {Travel Impact Model (TIM)},
+  year = {2022},
+  month = {April},
+  note = {Version A.B.C.YYYYMMDD. Retrieved September 28, 2024},
+  url = {https://github.com/google/travel-impact-model}
+}
+```
+
+If you access the TIM programmatically through the [API](#api-access), please
+mention this in your citation as well.
+
 ## Contact
 
 We welcome feedback and enquiries. Please get in touch using this
