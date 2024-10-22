@@ -98,10 +98,11 @@ supported aircraft:
     [source](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
     page 22 and Table 7). The factors used are as follows:
 
- kg CO<sub>2</sub>e/kg of A1 jet fuel burn    | TTW [kg CO<sub>2</sub>e/kg]    | WTT [kg CO<sub>2</sub>e/kg]    | WTW [kg CO<sub>2</sub>e/kg]
-----------------------------------------------|--------------------------------|--------------------------------|-----------------------------
- CORSIA and ISO                               | 3.1894                         | 0.6465                         | 3.8359
-
+Life Cycle Stage | Carbon Intensity Value from CORSIA  <br> (g CO<sub>2</sub>e/MJ) | Lower Heating Value from ISO 14083 <br> (MJ/kg) | Factor <br> (kg CO<sub>2</sub>e/kg)
+--------------------|-----------------|------|-------------------------------
+Tank-To-Wake (TTW)  | 74              | 43.1 | 3.1894 (= 74 * 43.1 / 1000)
+Well-To-Tank (WTT)  | 15 (= 89 - 74)  | 43.1 | 0.6465 (= 15 * 43.1 / 1000)
+Well-To-Wake (WTW)  | 89              | 43.1 | 3.8359 (= 7894 * 43.1 / 1000)
 
 CO<sub>2</sub>e is short for CO<sub>2</sub> equivalent and includes Kyoto Gases
 (GHG) as described
