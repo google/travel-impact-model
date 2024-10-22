@@ -351,7 +351,7 @@ break down:
 2.  Calculate the equivalent capacity of the aircraft according to the following
 
         C = first_class_seats * first_class_multiplier +
-            business_class_seats + business_class_multiplier +
+            business_class_seats * business_class_multiplier +
             …
 
     In this specific example, the estimated area is:
