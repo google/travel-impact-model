@@ -371,18 +371,18 @@ break down:
     the corresponding cabin factor.
     *   First:
         *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
-            `85.934 * 5 = 9.67`
+            `85.934 * 5 = 429.67`
         *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
-            `423.939 * 5 = 9.695`
+            `423.939 * 5 = 2119.695`
         *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
-            `509.873 * 5 = 9.365`
+            `509.873 * 5 = 2549.365`
     *   Business:
         *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
-            `85.934 * 4 = 3.736`
+            `85.934 * 4 = 343.736`
         *   Tank-to-Wake (TTW) emissions in kg of CO<sub>2</sub>e:
-            `423.939 * 4 = 5.756`
+            `423.939 * 4 = 1695.756`
         *   Well-to-Wake (WTW) emissions in kg of CO<sub>2</sub>e:
-            `509.873 * 4 = 9.492`
+            `509.873 * 4 = 2039.492`
     *   Premium Economy:
         *   Well-to-Tank (WTT) emissions in kg of CO<sub>2</sub>e:
             `85.934 * 1.5 = 128.901`
