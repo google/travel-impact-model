@@ -10,6 +10,20 @@ model that Google's Travel Sustainability team has compiled from several
 external data sources. The TIM predicts greenhouse gas (GHG) emissions for
 future flights to help travelers plan their travel.
 
+ISO 14083 defines a user's travel journey from when they leave their origin
+(point A) to when they arrive at their destination (point B). Figure 1[^1] below
+illustrates an example of a user's travel journey. To calculate the total
+emissions of this user's journey, ISO 14083 recommends summing up the emissions
+produced by each individual piece of the journey. In this example, it includes
+the emissions created driving to the airport, the emissions to run the origin
+airport, the flight's emissions, the emissions to run the destination airport,
+and the train's emissions to the user's destination. The Travel Impact Model
+only estimates the flight's emissions, highlighted in green.
+
+![ISO 14083 defined user journey (car to airport, in airport, flight (green), in airport, train from airport)](images/image4.png)
+
+(Figure 1[^2])
+
 ## Model overview
 
 For each flight, the TIM considers several factors, such as the Great Circle
@@ -52,12 +66,12 @@ Well-to-Wake (WTW) emissions is the sum of Well-to-Tank (WTT) and Tank-to-Wake
 (TTW) emissions.
 
 The EEA model takes the efficiency of the aircraft into account. As shown in
-Figure 1, a typical flight is modeled in two stages: *take off and landing*
+Figure 2, a typical flight is modeled in two stages: *take off and landing*
 (LTO, yellow) and *cruise, climb, and descend* (CCD, blue).
 
 ![Fixed fuel burn allocated during LTO, variable during CCD](images/image3.png)
 
-(Fig 1)
+(Figure 2)
 
 For each stage, there are aircraft-specific and distance-specific fuel burn
 estimates. Table 1 shows an example fuel burn forecast for a Boeing 787-9 (B789)
@@ -877,3 +891,18 @@ Tupolev TU-154                                  | TU5                |          
 Xian Yunshuji MA-60                             | MA6                |                              | Not supported
 Yakovlev YAK-40                                 | YK4                |                              | Not supported
 Yakovlev YAK-42                                 | YK2                |                              | Not supported
+
+### Appendix B: Term Mapping Table
+
+| TIM terminology        | ISO terminology                                                                                        |
+| ---------------------- | ------------------------------------------------------------------------------------------------------ |
+| Flight                 | Transportation chain element (TCE), specifically a single aircraft transporting a group of passengers  |
+| Flight                 | Transport operation category (TOC), same as TCE because there is only one type                         |
+| Flight emissions       | TCE's GHG emissions                                                                                    |
+| Tank-to-Wake (TTW)     | G<sub>vo, TCE</sub>                                                                                    |
+| Travel journey         | Transportation chain                                                                                   |
+| Well-to-Tank (WTT)     | G<sub>vep,TCE</sub>                                                                                    |
+| Well-to-Wake (WTW)     | G<sub>TCE</sub>                                                                                        |
+
+[^1]: This figure is based on Figure 2 on page ix in ISO 14083 (2023).
+[^2]: This figure uses icons from the following libraries, [Google Material Design Icons](https://github.com/google/material-design-icons) and [Material Design Icons](https://github.com/Templarian/MaterialDesign). All icons are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
