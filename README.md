@@ -136,7 +136,7 @@ is applied in ranked order:
     factor will be applied to the LTO and CCD numbers of the comparable type in
     the EEA database. Two data sources are used for correction factors:
     * For aircraft supported in EEA 2023 but not EEA 2019, derive it from EEA 2023.
-    * For all aircrafts with a winglet or sharklet variant for which no native data
+    * For all aircraft with a winglet or sharklet variant for which no native data
       exists (see [Appendix A](#appendix-a-aircraft-type-support)), use a 3% discount factor
       on top of EEA 2019 estimates. We are basing the 3% factor on a literature
       review ([Airbus](https://aircraft.airbus.com/en/services/enhance/systems-and-airframe-upgrades/fuel-efficiency-solutions#:~:text=Sharklets%20can%20deliver%20fuel%20savings,as%20range%20and%2For%20payload.),
