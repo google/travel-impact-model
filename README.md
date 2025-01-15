@@ -24,6 +24,15 @@ only estimates the flight's emissions, highlighted in green.
 
 (Figure 1[^2])
 
+As shown in Figure 2[^3], the TIM supports two types of flights:
+
+* multi-class flights with passengers
+* multi-class flights with passengers and cargo
+
+![Image of flight splitting into 2 types: flight with passengers only and flight with passengers and cargo](images/image5.png)
+
+(Figure 2[^4])
+
 ## Model overview
 
 For each flight, the TIM considers several factors, such as an estimate of the
@@ -67,12 +76,12 @@ Well-to-Wake (WTW) emissions is the sum of Well-to-Tank (WTT) and Tank-to-Wake
 (TTW) emissions.
 
 The EEA model takes the efficiency of the aircraft into account. As shown in
-Figure 2, a typical flight is modeled in two stages: *take off and landing*
+Figure 3, a typical flight is modeled in two stages: *take off and landing*
 (LTO, yellow) and *cruise, climb, and descend* (CCD, blue).
 
 ![Fixed fuel burn allocated during LTO, variable during CCD](images/image3.png)
 
-(Figure 2)
+(Figure 3)
 
 For each stage, there are aircraft-specific and distance-specific fuel burn
 estimates. Table 1 shows an example fuel burn forecast for a Boeing 787-9 (B789)
@@ -983,15 +992,19 @@ Tecnam P2012 Traveller                       | T12                | P212        
 
 ### Appendix B: Term Mapping Table
 
-| TIM terminology        | ISO terminology                                                                                        |
-| ---------------------- | ------------------------------------------------------------------------------------------------------ |
-| Flight                 | Transportation chain element (TCE), specifically a single aircraft transporting a group of passengers  |
-| Flight                 | Transport operation category (TOC), same as TCE because there is only one type                         |
-| Flight emissions       | TCE's GHG emissions                                                                                    |
-| Tank-to-Wake (TTW)     | G<sub>vo, TCE</sub>                                                                                    |
-| Travel journey         | Transportation chain                                                                                   |
-| Well-to-Tank (WTT)     | G<sub>vep,TCE</sub>                                                                                    |
-| Well-to-Wake (WTW)     | G<sub>TCE</sub>                                                                                        |
+| TIM terminology        | ISO terminology                                                                                                               |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Belly cargo            | Freight transportation                                                                                                        |
+| Cargo                  | Freight                                                                                                                       |
+| Flight                 | Transportation chain element (TCE), specifically a single aircraft transporting a group of passengers and potentially freight |
+| Flight emissions       | TCE's GHG emissions                                                                                                           |
+| Tank-to-Wake (TTW)     | G<sub>vo, TCE </sub>                                                                                                          |
+| Travel journey         | Transportation chain                                                                                                          |
+| Type of flight         | Transport operation category (TOC)                                                                                            |
+| Well-to-Tank (WTT)     | G<sub>vep,TCE</sub>                                                                                                           |
+| Well-to-Wake (WTW)     | G<sub>TCE</sub>                                                                                                               |
 
 [^1]: This figure is based on Figure 2 on page ix in ISO 14083 (2023).
 [^2]: This figure uses icons from the following libraries, [Google Material Design Icons](https://github.com/google/material-design-icons) and [Material Design Icons](https://github.com/Templarian/MaterialDesign). All icons are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+[^3]: This figure is based on Figure 6 on page 23 in ISO 14083 (2023).
+[^4]: This figure uses icons from the following libraries, [Google Material Design Icons](https://github.com/google/material-design-icons) and [Vaadin Icons](https://github.com/vaadin/vaadin-icons). All icons are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
