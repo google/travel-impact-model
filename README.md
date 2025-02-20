@@ -557,6 +557,9 @@ open source license
 Developer documentation is available on the Google Developers site for the
 [Travel Impact Model API](https://developers.google.com/travel/impact-model).
 
+For non-developers, access to the Travel Impact Model API is also available
+via the [Google Sheets Add-on](https://workspace.google.com/marketplace/app/flight_emissions_for_sheets/655425728274).
+
 ## Versioning
 
 The model will be developed further over time, e.g. with improved load factors
