@@ -131,9 +131,11 @@ Well-To-Wake (WTW)  | 89              | 43.1 | 3.8359 (= 7894 * 43.1 / 1000)
 CO<sub>2</sub>e is short for CO<sub>2</sub> equivalent and includes Kyoto Gases
 (GHG) as described
 [here](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Kyoto_basket#:~:text=The%20Kyoto%20basket%20encompasses%20the,sulphur%20hexafluoride%20\(SF6\)).
-Warming effects produced by short-lived climate pollutants (such as
-contrail-induced cirrus clouds) are not yet included in CO<sub>2</sub>e as
-calculated by the Travel Impact Model.
+Warming effects produced by short-lived climate pollutants and
+contrail-induced cirrus clouds are not yet included in CO<sub>2</sub>e as
+calculated by the Travel Impact Model. We are working with our stakeholders in
+the [governance body](https://travelimpactmodel.org/governance) to add non-CO2
+effects to the model.
 
 There is information for most commonly-used aircraft types in the EEA data, but
 some are missing. For missing aircraft types, one of the following alternatives
@@ -702,9 +704,12 @@ for a flight available from published flight schedules, or if they are
 incorrectly formatted or implausible, aircraft specific medians derived from the
 overall dataset are employed.
 
-**Contrail-induced cirrus clouds:** Warming effects produced by short-lived
-climate pollutants such as contrail-induced cirrus clouds are not yet included
-in emissions as calculated by the Travel Impact Model.
+**Contrail-induced cirrus clouds:** In regions of high humidity, water vapor in
+the air condenses around particles of soot from an aircraft’s exhaust and
+freezes. This forms cloud-like trails of condensation, or contrails for short.
+Most contrails dissipate quickly, but for a small fraction of flights,
+atmospheric conditions align to produce contrails that persist and spread out,
+trapping heat in the atmosphere.
 
 ## Data quality
 
