@@ -899,6 +899,7 @@ Boeing 737-500 (Winglets)                    | 73E                | B735        
 Boeing 737-600                               | 736                | B736                         | Direct match in EEA
 Boeing 737-700                               | 73G                | B737                         | Direct match in EEA
 Boeing 737-700                               | 73R                | B732                         | Direct match in EEA
+Boeing 737-700 (Scimitar Winglets)           | 7S7                | B737                         | Supported via winglet/sharklet correction factor
 Boeing 737-700 (Winglets)                    | 73W                | B737                         | Supported via winglet/sharklet correction factor
 Boeing 737-800                               | 738                | B738                         | Direct match in EEA
 Boeing 737-800 (Scimitar Winglets)           | 7S8                | B738                         | Supported via winglet/sharklet correction factor
