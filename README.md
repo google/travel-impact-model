@@ -549,6 +549,10 @@ are not always consistent across data providers. Therefore, providing estimates
 for all cabin classes simplifies integration of the TIM's data with other
 datasets.
 
+In cases where flight emissions data is sourced from the EASA [flight emissions
+label](#flight-emissions-label), estimates will not be generated for any
+cabin class not explicitly included in the label.
+
 ## Contrails impact prediction
 
 The Travel Impact Model estimates the contrail warming impact potential per
