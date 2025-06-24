@@ -1,4 +1,4 @@
-## Travel Impact Model 2.0.0
+## Travel Impact Model 3.0.0
 
 http://www.travelimpactmodel.org
 
@@ -35,12 +35,14 @@ As shown in Figure 2[^3], the TIM supports two types of flights:
 
 ## Model overview
 
-For each flight, the TIM considers several factors, such as an estimate of the
-distance flown between the origin and destination airports, and the aircraft
-type being used for the route. Actual GHG emissions at flight time may vary
-depending on factors not known at modeling time, such as speed and altitude of
-the aircraft, the actual flight route, and weather conditions at the time of
-flight.
+The TIM is a model[^5] designed to estimate GHG emissions generated from an
+aircraft transporting passengers with or without cargo from an origin to
+destination. For each flight, the TIM considers several factors, such as an
+estimate of the distance flown between the origin and destination airports, and
+the aircraft type being used for the route. Actual GHG emissions at flight time
+may vary depending on factors not known at modeling time, such as speed and
+altitude of the aircraft, the actual flight route, and weather conditions at the
+time of flight.
 
 ### Flight level emission estimates
 
@@ -61,11 +63,11 @@ There are several resources about the EEA model available:
     [documentation](https://www.eurocontrol.int/sites/default/files/content/documents/201807-european-aviation-fuel-burn-emissions-system-eea-v2.pdf)
     on pre-work for the EEA model
 
-Additionally, the Travel Impact Model updates the fuel burn to emissions
+Additionally, the Travel Impact Model uses the fuel burn to emissions
 conversion factor to align with the
 [ISO 14083](https://www.iso.org/standard/78864.html) Fuel Heat Combustion factor
 and
-[CORSIA Life Cycle Assessment](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf),
+[CORSIA Life Cycle Assessment](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)[^6],
 and breaks down emissions estimates into Well-to-Tank (WTT) and Tank-to-Wake
 (TTW) emissions.
 
@@ -109,9 +111,9 @@ supported aircraft:
 *   Extrapolation is used for flights that are either shorter than the smallest
     supported distance, or longer than the longest supported distance for that
     aircraft type.
-*   The Lower Heating Value from ISO 14083 (43.1 MJ/kg averaged over US and EU
-    numbers from [source](https://www.iso.org/standard/78864.html) Table K1 and
-    Table K3) and CORSIA Carbon Intensity value (74 gCO<sub>2</sub>e/MJ from
+*   The Lower Heating Value from ISO 14083 (43.1 MJ/kg for jet kerosene averaged over EU and US
+    numbers from [source](https://www.iso.org/standard/78864.html) Table K.1 and
+    Table K.3 respectively) and CORSIA Carbon Intensity value (74 gCO<sub>2</sub>e/MJ from
     [source](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
     Table 5) are used to calculate the jet fuel combustion to CO<sub>2</sub>e
     conversion factor of 3.1894. The CORSIA Life Cycle Assessment methodology is
@@ -126,7 +128,7 @@ Life Cycle Stage | Carbon Intensity Value from CORSIA  <br> (g CO<sub>2</sub>e/M
 --------------------|-----------------|------|-------------------------------
 Tank-To-Wake (TTW)  | 74              | 43.1 | 3.1894 (= 74 * 43.1 / 1000)
 Well-To-Tank (WTT)  | 15 (= 89 - 74)  | 43.1 | 0.6465 (= 15 * 43.1 / 1000)
-Well-To-Wake (WTW)  | 89              | 43.1 | 3.8359 (= 7894 * 43.1 / 1000)
+Well-To-Wake (WTW)  | 89              | 43.1 | 3.8359 (= 89 * 43.1 / 1000)
 
 CO<sub>2</sub>e is short for CO<sub>2</sub> equivalent and includes Kyoto Gases
 (GHG) as described
@@ -547,6 +549,141 @@ are not always consistent across data providers. Therefore, providing estimates
 for all cabin classes simplifies integration of the TIM's data with other
 datasets.
 
+## Contrails impact prediction
+
+The Travel Impact Model estimates the contrail warming impact potential per
+flight. This impact is communicated through classifications, or "buckets," which
+represent the warming impact relative to the fuel burn emissions for that
+specific flight.
+
+### Caveats and limitations
+
+Contrail formation and their resulting warming effects are highly dependent on
+specific weather conditions on the day of a flight. Specifically, contrail
+formation is heavily influenced by atmospheric humidity, temperature, and wind
+conditions at high altitudes. This makes precise predictions impossible at the
+time of booking. Therefore, the contrail impact information we provide can only
+represent the potential risk of contrail warming for a given flight.
+
+To overcome this predictive challenge, we analyze extensive historical
+meteorological data alongside past aircraft flight paths, identifying recurring
+geospatial and temporal patterns related to contrail formation. These patterns
+are then applied to future flight schedules, generating an estimated range of
+potential warming. Our model achieves this by first calculating the warming
+impact if contrails were to persist, and then multiplying this by the probability
+that persistent contrails will actually form for a given flight. While this
+estimate lacks the precision to predict the exact outcome of a specific flight,
+it provides a reliable directional trend when the impact of that flight is
+considered over a broader timeframe, such as a year or season.
+
+That’s how the Travel Impact Model (TIM) provides customers with emissions
+information at the time of booking a flight that is happening in the future.
+
+Contrail warming impact is categorized into relative impact levels (“buckets”)
+compared to the fuel burn emissions for the flight. This means that the
+contrail impact is assessed in comparison to the warming effect of the carbon
+dioxide released from burning fuel.
+
+### Recommended best practices
+
+1. **Acknowledge Uncertainty:** When presenting contrail impact levels to users,
+emphasize that these levels represent the risk of contrail warming. For example,
+use phrases like:
+    * "Risk of high contrail impact"
+    * "High likelihood of contrail warming impact."
+    * "Moderate potential for contrail warming"
+
+2. **Keep Contrail Impact Separate from Fuel Burn Emissions:** Avoid combining
+   these metrics into a single value. Due to the inherent uncertainty in
+   contrail warming impact, it's not yet possible to create a combined metric
+   that is both accurate and easily understandable for users.
+
+3. **Consider Both Contrail Impact and Fuel Burn:** Do not rely solely on
+   contrail impact levels when making decisions. Both fuel burn and contrail
+   impact contribute significantly to climate impact and should be taken into
+   account. Because fuel burn impact is currently more predictable, it should
+   remain the main impact factor communicated.
+
+4. **Avoid CO2e Conversion:** Do not convert contrail impact levels into a CO2e
+   value. This can create a misleading impression of precision. It's best to
+   represent contrail warming impact using the established impact level
+   categories.
+
+5. **Aggregate for Multi-Leg Journeys:** For trips with multiple flights, you can
+   combine contrail impact levels relative to each flight's fuel burn. Since the
+   contrail impact is relative to fuel burn emissions, the values can be
+   aggregated for multi-leg flights. It is recommended to use the mean relative
+   impact of each bucket range for computing this aggregate. Since the highest
+   impact category has no upper limit, a value of 1.2 is used as a
+   representative mean for calculations to ensure a consistent and conservative
+   approach.
+
+    ```
+    Example 1
+
+         Bucket ranges: LOW [0.0, 0.2), MODERATE [0.2, 1.0), HIGH [1.0, ∞)
+
+         Flight A:  fuel burn = 100 kg CO2e, contrail impact = LOW
+         Flight B:  fuel burn = 50 kg CO2e, contrail impact = HIGH
+
+         Aggregate = (100kg * (0.1 for LOW) + 50kg * (1.2 for HIGH)) / (total fuel burn)
+                             = 70kg / 150kg
+                             = 0.4667
+
+         Aggregate classification: MODERATE contrail impact bucket
+    ```
+
+    ```
+    Example 2
+
+        Bucket ranges: LOW [0.0, 0.2), MODERATE [0.2, 1.0), HIGH [1.0, ∞)
+
+        Flight A:  fuel burn = 50 kg CO2e, contrail impact = MODERATE
+        Flight B:  fuel burn = 500 kg CO2e, contrail impact = HIGH
+
+        Aggregate = (50kg * (0.6 for MODERATE) + 500kg * (1.2 for HIGH)) / (total fuel burn)
+                            = 630kg / 550kg
+                            = 1.15
+
+        Aggregate classification: HIGH contrail impact bucket
+    ```
+
+## Airport emissions
+
+The TIM estimates flight emissions only, but ISO 14083 recommends including the
+airport emissions, highlighted in blue below, when calculating the emissions for
+a user's journey. The airport emissions are emissions generated by a passenger
+while at the airport (i.e. electric walkways to move passengers, vehicles to move
+luggage, air conditioning, etc).
+
+![ISO 14083 defined user journey (car to airport, in airport (blue), flight (green), in airport (blue), train from airport)](images/image6.png)
+
+Following Airport Carbon Accreditation (ACA)'s
+[2024 annual report](https://www.airportcarbonaccreditation.org/wp-content/uploads/2025/04/Airport-Carbon-Accreditation-Annual-Report-2023-2024.pdf)
+(page 21), we suggest adding the global average value of 1.71 kg per passenger
+for every airport visited to the total flight emissions calculated.[^7]
+
+## Flight emissions label
+
+The [Flight Emissions Label (FEL)](https://www.flightemissions.eu/) empowers
+passengers to make informed decisions by providing clear and trusted information
+about their carbon emissions, in accordance with Article 14 of the
+[ReFuelEU Aviation Regulation](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32023R2405).
+It relies on real data from past flight performance to label flights in the
+future. The Flight Emissions Label (FEL) is calculated using aircraft operators
+data such as fuel purchases and consumption, aircraft seating configurations and
+cargo. This data is verified, and [EASA](https://www.easa.europa.eu/en/light)
+processes it to estimate the emissions in accordance with the EN ISO 14083:2023
+standard.
+
+TIM users can easily access FEL via the TIM distribution network due to the
+interoperability of the two methodologies. For flights with FEL issued, these
+labels replace TIM estimates and are clearly marked as "EASA" to indicate the
+source.
+
+Please refer to [www.flightemissions.eu](https://www.flightemissions.eu) for
+more information about The Flight Emissions Label (FEL) and display guidelines.
+
 ## Legal base for model data sharing
 
 The GHG emission estimate data are available via API under the
@@ -584,6 +721,11 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
     but no change to the algorithms regularly.
 
 ## Changelog
+
+### 3.0.0
+
+Added support for EASA label attribution, contrails impact, and ISO 14083
+related documentation updates.
 
 ### 2.0.0
 
@@ -675,7 +817,7 @@ Initial public version of the Travel Impact Model.
 The model described in this document produces estimates of GHG emissions.
 Emission estimates aim to be representative of what the typical emissions for a
 flight matching the model inputs would be. Estimates might differ from actual
-emissions based on a number of factors.
+emissions based on a number of factors. All calculation results use the TIM model and no default GHG emissions intensities are used as fallbacks. The TIM does not use country-specific GHG emissions factors and therefore, it is not recommended for official reporting purposes in those locations where country specific factors are mandated.
 
 **Aircraft types:** The emissions model accounts for the equipment type as
 published in the flight schedules. The majority of aircraft types in use are
@@ -710,6 +852,8 @@ freezes. This forms cloud-like trails of condensation, or contrails for short.
 Most contrails dissipate quickly, but for a small fraction of flights,
 atmospheric conditions align to produce contrails that persist and spread out,
 trapping heat in the atmosphere.
+
+**Empty flights:** ISO 14083 defines empty flights as any additional flights with no passengers and no cargo that are required to happen in order to operate a passenger flight (i.e. repositioning flights, maintenance flights, etc). It recommends that the GHG emissions for a flight includes any empty flights required for that flight to operate. At present, we are unable to support empty flights due to lack of data available.
 
 ## Data quality
 
@@ -999,12 +1143,16 @@ Saab 340                                     | SF3                | SF34        
 Sukhoi Superjet 100-95                       | SU9                | SU95                         | Direct match in EEA
 Tecnam P2012 Traveller                       | T12                | P212                         | Direct match in EEA
 
-### Appendix B: Term Mapping Table
+### Appendix B: Term mapping table
 
 TIM terminology        | ISO terminology
----------------------- | -----------------------------------------------------------------------------------------------------------------------------
+---------------------- | -------------------------------------------------------------------------------------------------------------------------------
+Actual emissions       | Primary data as defined in 7.2.3 in ISO 14083 documentation
+Airport                | Hub operation categories (HOC), specifically a location where passengers are transferred from one mode of transport to another
+Airport emissions      | HOC's GHG emissions
 Belly cargo            | Freight transportation
 Cargo                  | Freight
+Empty flight           | Empty trip
 Flight                 | Transportation chain element (TCE), specifically a single aircraft transporting a group of passengers and potentially freight
 Flight emissions       | TCE's GHG emissions
 Tank-to-Wake (TTW)     | G<sub>vo, TCE </sub>
@@ -1013,7 +1161,55 @@ Type of flight         | Transport operation category (TOC)
 Well-to-Tank (WTT)     | G<sub>vep,TCE</sub>
 Well-to-Wake (WTW)     | G<sub>TCE</sub>
 
+### Appendix C: Reporting details for passenger transport
+
+This table shows the reporting details in the TIM as defined in ISO 14083 Table
+2.
+
+Reporting elements                     | Description
+-------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Identification of the services covered | All transport chain elements related to passenger transport by airplane for the next 11 months and the average airport emissions per passenger
+Overall results on GHG emissions       | Total emissions of an air transport chain per passenger is sum of all airport hub GHG emissions plus all flight GHG emissions for each passenger in that transport chain <br><br>(e.g. If the transport chain is a non-direct flight from ZRH-BOS with a stop in LHR, the transport chain's GHG emissions will include the sum of airports' GHG emissions in ZRH, LHR, BOS and the flights GHG emissions for ZRH-LHR and LHR-BOS.)
+Transport activity                     | Sum of flight GHG emissions<br><br>The GHG emissions are Well-to-Wake (WTW) emissions that are the sum of the Well-to-Tank (WTT), the emissions of the production, processing and delivery of the fuel used, and Tank-to-Wake (TTW), the emissions created by the flight itself.<br><br>The CORSIA methodology includes emissions for CO2, CH4 and N2O in its carbon intensity factor. Contrails and other Kyoto gases not mentioned are not included in the TIM GHG emissions value.
+Transport activity distance            | For flight GHG emissions, uses the great-circle distance plus the distance adjustment factor
+Hub activity                           | Sum of all airport emissions<br><br>The airport emissions can be calculated as 1.71 kgs * number of airport hubs visited.
+Additional information                 | Additional information can be found in https://github.com/google/travel-impact-model and https://travelimpactmodel.org/governance
+
+### Appendix D: Model parameters
+
+This table shows the TIM's model type as defined in ISO 14083 Table
+3.
+
+Model Type     | Yes/No
+-------------- | ------
+Energy based   | No
+Activity based | Yes
+
+This table shows the input parameters into the TIM as defined in ISO 14083 Table
+3.
+
+Parameter                            | Included? | Additional information
+------------------------------------ | --------- | -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Aircraft Characteristics**         |           |
+Aircraft type                        | Yes       | **Primary:** Uses the specific aircraft model operating this flight from flight schedules data<br><br>**Modelled:** Uses fallback as described in Appendix A
+Engine age                           | No        |
+Engine type                          | Yes       | **Default value:** Uses the base EEA model for most common engine types for a given aircraft operated in Europe
+Fuel type                            | No        |
+Seating configuration                | Yes       | **Primary:** Uses the actual configuration for the aircraft model<br><br>**Modelled:** Uses OAG fleet data, matching a unique config for the carrier and aircraft<br><br>**Default Value:** Uses the typical configuration across all carriers
+**Journey Characteristics**          |           |
+Airport locations                    | Yes       | **Primary:** Uses exact longitude/latitude of the airport location
+Aircraft energy consumption profile  | Yes       | **Modelled:** Uses aircraft's EEA estimated fuel burn with the CORSIA lifecycle carbon intensity factor
+Cross or tail wind                   | No        |
+Route taken                          | Yes       | **Modelled:** Uses the calculated GCD with either route-based or country-based distance adjustment factor<br><br>**Default value:** Uses the calculated GCD with a distance adjustment factor
+**Operational**                      |           |
+Cargo carried                        | Yes       | **Modelled:** Uses modelled historical trends of a route's cargo mass fraction and aircraft type, or aircraft type and distance, which is divided by total payload, to apportion emissions between cargo and passenger
+Empty trips                          | No        |
+Load factor                          | Yes       | **Modelled:** Uses actual load factor data aggregated over 6 years for apportioning cargo and passenger data<br><br>**Default value:** Uses load factor data average for all U.S. flights in 2019 for apportioning cargo and passenger data
+
 [^1]: This figure is based on Figure 2 on page ix in ISO 14083 (2023).
 [^2]: This figure uses icons from the following libraries, [Google Material Design Icons](https://github.com/google/material-design-icons) and [Material Design Icons](https://github.com/Templarian/MaterialDesign). All icons are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 [^3]: This figure is based on Figure 6 on page 23 in ISO 14083 (2023).
 [^4]: This figure uses icons from the following libraries, [Google Material Design Icons](https://github.com/google/material-design-icons) and [Vaadin Icons](https://github.com/vaadin/vaadin-icons). All icons are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+[^5]: The Travel Impact Model is specifically an activity-based model as defined in ISO 14083 Annex M.
+[^6]: The Travel Impact Model uses the global standard CORSIA emissions conversion factor of 3.8359 which is more recent (2022) compared to ISO 14083's factor of 3.645.
+[^7]: The ACA's 2024 annual report includes regional airport emissions data as well. There is some variation between airports, across years and some regional data values are higher than 1.71 kg per passenger. We chose to recommend the 1.71kg average value to remain conservative with our estimate.
