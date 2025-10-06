@@ -67,7 +67,7 @@ Additionally, the Travel Impact Model uses the fuel burn to emissions
 conversion factor to align with the
 [ISO 14083](https://www.iso.org/standard/78864.html) Fuel Heat Combustion factor
 and
-[CORSIA Life Cycle Assessment](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)[^6],
+[CORSIA Life Cycle Assessment](https://www.icao.int/sites/default/files/environmental-protection/CORSIA/Documents/SCS-Evaluation/CORSIA_Supporting_Document_CORSIA-Eligible-Fuels_LCA_Methodology_V6.pdf)[^6],
 and breaks down emissions estimates into Well-to-Tank (WTT) and Tank-to-Wake
 (TTW) emissions.
 
@@ -114,15 +114,15 @@ supported aircraft:
 *   The Lower Heating Value from ISO 14083 (43.1 MJ/kg for jet kerosene averaged over EU and US
     numbers from [source](https://www.iso.org/standard/78864.html) Table K.1 and
     Table K.3 respectively) and CORSIA Carbon Intensity value (74 gCO<sub>2</sub>e/MJ from
-    [source](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
+    [source](https://www.icao.int/sites/default/files/environmental-protection/CORSIA/Documents/SCS-Evaluation/CORSIA_Supporting_Document_CORSIA-Eligible-Fuels_LCA_Methodology_V6.pdf)
     Table 5) are used to calculate the jet fuel combustion to CO<sub>2</sub>e
     conversion factor of 3.1894. The CORSIA Life Cycle Assessment methodology is
     used to calculate a WTT CO<sub>2</sub>e emissions factor of 0.6465 (WTT 15g
     CO<sub>2</sub>e/MJ added to the TTW 74 gCO<sub>2</sub>e/MJ Carbon Intensity
     to total up to the WTW lifecycle Carbon Intensity of 89 gCO<sub>2</sub>e/MJ
     from
-    [source](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
-    page 22 and Table 7). The factors used are as follows:
+    [source](https://www.icao.int/sites/default/files/environmental-protection/CORSIA/Documents/SCS-Evaluation/CORSIA_Supporting_Document_CORSIA-Eligible-Fuels_LCA_Methodology_V6.pdf)
+    page 24 and Table 7). The factors used are as follows:
 
 Life Cycle Stage | Carbon Intensity Value from CORSIA  <br> (g CO<sub>2</sub>e/MJ) | Lower Heating Value from ISO 14083 <br> (MJ/kg) | Factor <br> (kg CO<sub>2</sub>e/kg)
 --------------------|-----------------|------|-------------------------------
@@ -211,7 +211,7 @@ Used for flight level emissions:
     ([link](https://www.eea.europa.eu/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation.3/view))
 *   Teoh et al., The high-resolution Global Aviation emissions Inventory based on ADS-B (GAIA) for 2019 - 2021: Origin-destination statistics ([link](https://zenodo.org/records/8369564))
 *   CORSIA Eligible Fuels Life Cycle Assessment Methodology
-    ([link](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf))
+    ([link](https://www.icao.int/sites/default/files/environmental-protection/CORSIA/Documents/SCS-Evaluation/CORSIA_Supporting_Document_CORSIA-Eligible-Fuels_LCA_Methodology_V6.pdf)
 *   ISO 14083 ([link](https://www.iso.org/standard/78864.html))
 
 ### Breakdown from flight level to individual level
@@ -766,13 +766,13 @@ Heating Value from ISO 14083 and CORSIA Carbon Intensity value), and using the
 CORSIA Life Cycle Assessment methodology to implement a WTT CO<sub>2</sub>e
 emissions factor 0.6465. Reference:
 [ISO](https://www.iso.org/standard/78864.html),
-[CORSIA](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf).
+[CORSIA](https://www.icao.int/sites/default/files/environmental-protection/CORSIA/Documents/SCS-Evaluation/CORSIA_Supporting_Document_CORSIA-Eligible-Fuels_LCA_Methodology_V6.pdf).
 
 ### 1.7.0
 
 Updating the jet fuel combustion to CO<sub>2</sub> conversion factor from 3.15
 based on the EEA methodology to 3.1672 to align with the
-[CORSIA methodology's](https://www.icao.int/environmental-protection/CORSIA/Documents/CORSIA_Eligible_Fuels/CORSIA_Supporting_Document_CORSIA%20Eligible%20Fuels_LCA_Methodology_V5.pdf)
+[CORSIA methodology's](https://www.icao.int/sites/default/files/environmental-protection/CORSIA/Documents/SCS-Evaluation/CORSIA_Supporting_Document_CORSIA-Eligible-Fuels_LCA_Methodology_V6.pdf)
 recommended factor.
 
 ### 1.6.0
