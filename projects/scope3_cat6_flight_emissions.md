@@ -5,7 +5,7 @@
 The Travel Impact Model (TIM): Scope 3, category 6 flight emissions dataset is
 designed to help companies and individuals calculate and report Scope 3,
 category 6 flight emissions from business travel. The full model output includes
-emission estimates from 2019 for scheduled worldwide commercial flights.[^1]
+emission estimates since 2019 for scheduled worldwide commercial flights.[^1]
 
 This dataset offers three calculation tiers. Users should select the tier that
 matches the granularity of their own available travel data, prioritizing higher
