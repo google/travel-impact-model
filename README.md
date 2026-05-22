@@ -5,7 +5,7 @@ http://www.travelimpactmodel.org
 ## Background
 
 In this document we describe the modeling assumptions and input specifications
-behind the Travel Impact Model (TIM), a state of the art emission estimation
+behind the Travel Impact Model (TIM), a state-of-the-art emission estimation
 model that Google's Travel Sustainability team has compiled from several
 external data sources. The TIM predicts greenhouse gas (GHG) emissions for
 future flights to help travelers plan their travel.
@@ -50,15 +50,15 @@ time of flight.
 
 The Travel Impact Model estimates fuel burn based on the Tier 3 methodology for
 emission estimates from the
-[Annex 1.A.3.a Aviation 2023](https://www.eea.europa.eu/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation.3/view)
+[Annex 1.A.3.a Aviation 2023](https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation.3)
 published by the European Environment Agency (EEA).
 
 There are several resources about the EEA model available:
 
 *   the main
-    [documentation](https://www.eea.europa.eu/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation-2023/view)
+    [documentation](https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation-2023)
 *   the
-    [data set](https://www.eea.europa.eu/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation.3/view)
+    [data set](https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation.3)
 *   further
     [documentation](https://www.eurocontrol.int/sites/default/files/content/documents/201807-european-aviation-fuel-burn-emissions-system-eea-v2.pdf)
     on pre-work for the EEA model
@@ -79,7 +79,7 @@ Well-to-Wake (WTW) emissions is the sum of Well-to-Tank (WTT) and Tank-to-Wake
 
 The EEA model takes the efficiency of the aircraft into account. As shown in
 Figure 3, a typical flight is modeled in two stages: *take off and landing*
-(LTO, yellow) and *cruise, climb, and descend* (CCD, blue).
+(LTO, yellow) and *cruise, climb, and descent* (CCD, blue).
 
 ![Fixed fuel burn allocated during LTO, variable during CCD](images/image3.png)
 
@@ -149,10 +149,10 @@ is applied in ranked order:
     be applied on top of EEA estimates. The correction factor will be applied to
     the LTO and CCD numbers of the comparable type in the EEA database. We are
     basing the 3% factor on a literature review as a conservative estimate
-    ([Airbus](https://aircraft.airbus.com/en/services/enhance/systems-and-airframe-upgrades/fuel-efficiency-solutions#:~:text=Sharklets%20can%20deliver%20fuel%20savings,as%20range%20and%2For%20payload.),
+    ([Airbus](https://www.aircraft.airbus.com/en/services/enhance/system-upgrades/fuel-efficiency-solutions#02),
     [AviationBenefits](https://aviationbenefits.org/case-studies/wingtip-devices/),
-    [Boeing](http://www.boeing.ch/commercial/aeromagazine/articles/qtr_03_09/pdfs/AERO_Q309_article03.pdf),
-    [Cirium](https://www.cirium.com/thoughtcloud/impact-winglets-on-fuel-consumption-and-aircraft-emissions/),
+    [Boeing](https://web.archive.org/web/20111021023457/http://www.boeing.com/commercial/aeromagazine/articles/qtr_03_09/pdfs/AERO_Q309_article03.pdf),
+    [Cirium]( https://web.archive.org/web/20231022053202/https://www.cirium.com/thoughtcloud/impact-winglets-on-fuel-consumption-and-aircraft-emissions/),
     [NASA](https://spinoff.nasa.gov/Spinoff2010/t_5.html),
     [SimpleFlying](https://simpleflying.com/wing-tip-fuel-efficiency/)).
 *   *Supported by fallback to previous generation aircraft type:* If there are
@@ -208,10 +208,10 @@ Used for flight level emissions:
 
 *   EMEP/EEA air pollutant emission inventory guidebook 2023 Annex 1 version
     v1.5_18_09_2024
-    ([link](https://www.eea.europa.eu/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation.3/view))
+    ([link](https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-a-aviation.3))
 *   Teoh et al., The high-resolution Global Aviation emissions Inventory based on ADS-B (GAIA) for 2019 - 2021: Origin-destination statistics ([link](https://zenodo.org/records/8369564))
 *   CORSIA Eligible Fuels Life Cycle Assessment Methodology
-    ([link](https://www.icao.int/sites/default/files/environmental-protection/CORSIA/Documents/SCS-Evaluation/CORSIA_Supporting_Document_CORSIA-Eligible-Fuels_LCA_Methodology_V6.pdf)
+    ([link](https://www.icao.int/sites/default/files/environmental-protection/CORSIA/Documents/SCS-Evaluation/CORSIA_Supporting_Document_CORSIA-Eligible-Fuels_LCA_Methodology_V6.pdf))
 *   ISO 14083 ([link](https://www.iso.org/standard/78864.html))
 
 ### Breakdown from flight level to individual level
@@ -458,7 +458,7 @@ belly cargo and passengers:
     * Well-to-Wake (WTW) passenger emissions in kg of CO₂e: `216498 * 0.92 = 199178`
 
 Once the total flight emissions are computed, let's compute the per passenger
-break down:
+breakdown:
 
 1.  Determine which seating class factors to use for the given flight. In the
     `ZRH-SFO` example, we will use the wide-body factors (`Boeing 787-9`).
@@ -900,7 +900,7 @@ We welcome feedback and enquiries. Please get in touch using this
 
 ## Glossary
 
-**CCD:** The flight phases *Climb*, *Cruise*, *and* *Descend* occur above a
+**CCD:** The flight phases *Climb*, *Cruise*, *and* *Descent* occur above a
 flight altitude of 3,000 feet.
 
 **CO₂**: Carbon dioxide is the most significant long-lived greenhouse
