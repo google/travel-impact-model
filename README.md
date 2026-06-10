@@ -1195,20 +1195,20 @@ This table shows the input parameters into the TIM as defined in ISO 14083 Table
 Parameter                            | Included? | Additional information
 ------------------------------------ | --------- | -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Aircraft Characteristics**         |           |
-Aircraft type                        | Yes       | **Primary:** Uses the specific aircraft model operating this flight from flight schedules data<br><br>**Modelled:** Uses fallback as described in Appendix A
+Aircraft type                        | Yes       | **Primary:** Uses the specific aircraft model operating this flight from flight schedules data<br><br>**Modeled:** Uses fallback as described in Appendix A
 Engine age                           | No        |
 Engine type                          | Yes       | **Default value:** Uses the base EEA model for most common engine types for a given aircraft operated in Europe
 Fuel type                            | No        |
-Seating configuration                | Yes       | **Primary:** Uses the actual configuration for the aircraft model<br><br>**Modelled:** Uses OAG fleet data, matching a unique config for the carrier and aircraft<br><br>**Default Value:** Uses the typical configuration across all carriers
+Seating configuration                | Yes       | **Primary:** Uses the actual configuration for the aircraft model<br><br>**Modeled:** Uses OAG fleet data, matching a unique config for the carrier and aircraft<br><br>**Default Value:** Uses the typical configuration across all carriers
 **Journey Characteristics**          |           |
 Airport locations                    | Yes       | **Primary:** Uses exact longitude/latitude of the airport location
-Aircraft energy consumption profile  | Yes       | **Modelled:** Uses aircraft's EEA estimated fuel burn with the CORSIA lifecycle carbon intensity factor
+Aircraft energy consumption profile  | Yes       | **Modeled:** Uses aircraft's EEA estimated fuel burn with the CORSIA lifecycle carbon intensity factor
 Cross or tail wind                   | No        |
-Route taken                          | Yes       | **Modelled:** Uses the calculated GCD with either route-based or country-based distance adjustment factor<br><br>**Default value:** Uses the calculated GCD with a distance adjustment factor
+Route taken                          | Yes       | **Modeled:** Uses the calculated GCD with either route-based or country-based distance adjustment factor<br><br>**Default value:** Uses the calculated GCD with a distance adjustment factor
 **Operational**                      |           |
-Cargo carried                        | Yes       | **Modelled:** Uses modelled historical trends of a route's cargo mass fraction and aircraft type, or aircraft type and distance, which is divided by total payload, to apportion emissions between cargo and passenger
+Cargo carried                        | Yes       | **Modeled:** Uses modeled historical trends of a route's cargo mass fraction and aircraft type, or aircraft type and distance, which is divided by total payload, to apportion emissions between cargo and passenger
 Empty trips                          | No        |
-Load factor                          | Yes       | **Modelled:** Uses actual load factor data aggregated over 6 years for apportioning cargo and passenger data<br><br>**Default value:** Uses load factor data average for all U.S. flights in 2019 for apportioning cargo and passenger data
+Load factor                          | Yes       | **Modeled:** Uses actual load factor data aggregated over 6 years for apportioning cargo and passenger data<br><br>**Default value:** Uses load factor data average for all U.S. flights in 2019 for apportioning cargo and passenger data
 
 [^1]: This figure is based on Figure 2 on page ix in ISO 14083 (2023).
 [^2]: This figure uses icons from the following libraries, [Google Material Design Icons](https://github.com/google/material-design-icons) and [Material Design Icons](https://github.com/Templarian/MaterialDesign). All icons are licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
