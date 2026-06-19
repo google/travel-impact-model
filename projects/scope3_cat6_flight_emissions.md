@@ -31,12 +31,52 @@ the emissions produced by burning aviation fuel during a flight; and the
 well-to-wake (WTW) value, which is the combination of the first two, for a more
 holistic view of the climate impact.
 
-### How to Use
+### API Access
 
 Please refer to the API documentation for
 [`computeScope3FlightEmissions` in the Travel Impact Model API website](https://developers.google.com/travel/impact-model/docs/reference/rest/v1/flights/computeScope3FlightEmissions).
 
 ## Methodology
+
+### Tier 1: TIM Past Direct Flight Emissions
+
+For most flights in the Scope 3 Category 6 Flight Emissions catalogue, the
+data is computed using [the Travel Impact Model v2.0.0](https://github.com/google/travel-impact-model/tree/main?tab=readme-ov-file#200)
+and each flight's emissions data is a snapshot of the TIM emissions
+data calculated the day before the flight. However, for flights between
+2019-01-01 and 2023-12-31, data was backfilled. In this backfill, we
+augmented the use of passenger load factors by using the actual monthly
+data, where available. Any flight in this date range that matches data
+provided by the US DOT on the carrier, route, year, and month or data
+provided by CH-Aviation on the carrier, year, and month uses actuals
+rather than the predictions as specified in the TIM methodology.
+
+### Tier 2: Typical Flight Emissions
+
+The past Typical Flight Emissions dataset for each year is created using
+a snapshot of [Typical Flight Emissions](typical_flight_emissions.md).
+The emissions data used for Typical Flight Emissions is based on the
+Tier 1 dataset. Data is computed every year on January 1st for that
+year's data. However, since this dataset is based on the Tier 1 dataset,
+data for flights between 2019 - 2023 were backfilled, meaning the monthly
+actuals load factor data was used when available.
+
+### Tier 3: Distance-Based Emission Factors
+
+Typical Flight Emissions values, as computed in Tier 2, are aggregated to form
+Tier 3: For each origin / destination pair and cabin class, the carbon
+intensity per passenger-kilometer is computed. The median carbon
+intensity per passenger-kilometer is chosen as distance-based emissions
+factor. Data is computed every year on January 1st for that year's data.
+Similarly to Tier 2, data for the years 2019 - 2023 were backfilled, meaning the
+monthly actuals load factor data was used when available.
+
+### Airport emissions
+
+The TIM estimates flight emissions only, but ISO 14083 recommends including the
+airport emissions. Please follow the guidance as defined in [Travel Impact Model Airport Emissions](https://github.com/google/travel-impact-model#airport-emissions).
+
+## Usage
 
 The dataset allows you to calculate emissions in several ways, organized into
 tiers. When calculating your emissions, you should always use the highest tier
