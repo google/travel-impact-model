@@ -164,6 +164,13 @@ consumption estimates. More details can be found in the
 and
 [this technical brief](https://travelimpactmodel.org/static/media/tim_model_selection.pdf).
 
+## Assurance
+
+In August 2026, the Travel Impact Model obtained independent ISAE 3000 assurance
+on its IT and data controls. The assurance report is available upon request via
+our
+[contact form](https://support.google.com/travel/contact/tim?pcff=category:travel_impact_model_\(TIM\)_specifications).
+
 ## Country-Specific Factors
 
 If a country mandates the use of specific, government-provided emission factors,

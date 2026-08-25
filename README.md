@@ -863,6 +863,13 @@ trapping heat in the atmosphere.
 
 See [technical brief](https://travelimpactmodel.org/static/media/tim_model_selection.pdf) on TIM base model selection.
 
+## Assurance
+
+In August 2026, the Travel Impact Model obtained independent ISAE 3000 assurance
+on its IT and data controls. The assurance report is available upon request via
+our
+[contact form](https://support.google.com/travel/contact/tim?pcff=category:travel_impact_model_\(TIM\)_specifications).
+
 ## How to cite TIM in publications
 
 You are welcome to use the Travel Impact Model (TIM) in your publications. When
@@ -943,6 +950,11 @@ on the surface of a sphere when measured along the surface of the sphere.
 
 **ICAO:** The International Civil Aviation Organization, a specialized agency of
 the United Nations.
+
+**ISAE 3000**: An international standard (International Standard on Assurance
+Engagements 3000) for assurance engagements other than audits or reviews of
+historical financial information, published by the International Auditing and
+Assurance Standards Board (IAASB).
 
 **ISO 14083**: The international standard that establishes a common methodology
 for the quantification and reporting of greenhouse gas (GHG) emissions arising
