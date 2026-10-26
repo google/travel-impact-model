@@ -726,15 +726,27 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
 
 ## Changelog
 
+### 3.0.1
+
+Corrects the mapped ICAO code from B732 to B737 for the 73R variant.
+
 ### 3.0.0
 
 Added support for EASA label attribution, contrails impact, and ISO 14083
 related documentation updates.
 
+### 2.0.1
+
+Corrects the mapped ICAO code from B732 to B737 for the 73R variant.
+
 ### 2.0.0
 
 Updating base model data to EEA 2023, adding support for cargo mass fraction,
 and introducing distance adjustment.
+
+### 1.10.1
+
+Corrects the mapped ICAO code from B732 to B737 for the 73R variant.
 
 ### 1.10.0
 
@@ -1058,7 +1070,7 @@ Boeing 737-500                               | 735                | B735        
 Boeing 737-500 (Winglets)                    | 73E                | B735                         | Supported via winglet/sharklet correction factor
 Boeing 737-600                               | 736                | B736                         | Direct match in EEA
 Boeing 737-700                               | 73G                | B737                         | Direct match in EEA
-Boeing 737-700                               | 73R                | B732                         | Direct match in EEA
+Boeing 737-700                               | 73R                | B737                         | Direct match in EEA
 Boeing 737-700 (Scimitar Winglets)           | 7S7                | B737                         | Supported via winglet/sharklet correction factor
 Boeing 737-700 (Winglets)                    | 73W                | B737                         | Supported via winglet/sharklet correction factor
 Boeing 737-800                               | 738                | B738                         | Direct match in EEA

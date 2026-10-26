@@ -41,7 +41,7 @@ Please refer to the API documentation for
 ### Tier 1: TIM Past Direct Flight Emissions
 
 For most flights in the Scope 3 Category 6 Flight Emissions catalogue, the
-data is computed using [the Travel Impact Model v2.0.0](https://github.com/google/travel-impact-model/tree/main?tab=readme-ov-file#200)
+data is computed using [the Travel Impact Model v2.0](https://github.com/google/travel-impact-model/tree/main?tab=readme-ov-file#changelog)
 and each flight's emissions data is a snapshot of the TIM emissions
 data calculated the day before the flight. However, for flights between
 2019-01-01 and 2023-12-31, data was backfilled. In this backfill, we
@@ -152,7 +152,7 @@ map them to the nearest major airport based on distance and traffic volume.
 ## TIM Versioning
 
 The current version for the Scope 3, category 6 flight emissions dataset uses
-[the Travel Impact Model v2.0.0](https://github.com/google/travel-impact-model/tree/main?tab=readme-ov-file#200).
+[the Travel Impact Model v2.0](https://github.com/google/travel-impact-model/tree/main?tab=readme-ov-file#changelog).
 
 ## Model Validation
 
