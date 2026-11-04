@@ -726,6 +726,11 @@ A full model version will have four components: **MAJOR.MINOR.PATCH.DATE**, e.g.
 
 ## Changelog
 
+### 3.0.2
+
+Updates mapped ICAO codes for 8 aircraft variants (31N, 338, 342, 7M1, 7M7, 74H,
+77L, and CRK) to use EEA 2023 models.
+
 ### 3.0.1
 
 Corrects the mapped ICAO code from B732 to B737 for the 73R variant.
@@ -734,6 +739,11 @@ Corrects the mapped ICAO code from B732 to B737 for the 73R variant.
 
 Added support for EASA label attribution, contrails impact, and ISO 14083
 related documentation updates.
+
+### 2.0.2
+
+Updates mapped ICAO codes for 8 aircraft variants (31N, 338, 342, 7M1, 7M7, 74H,
+77L, and CRK) to use EEA 2023 models.
 
 ### 2.0.1
 
@@ -1018,7 +1028,7 @@ Airbus A318                                  | 318                | A318        
 Airbus A318 (Sharklets)                      | 31A                | A318                         | Supported via winglet/sharklet correction factor
 Airbus A318/319/320/321                      | 32S                | A321                         | Mapped to least efficient in family
 Airbus A319                                  | 319                | A319                         | Direct match in EEA
-Airbus A319neo                               | 31N                | A321                         | Mapped to least efficient in family
+Airbus A319neo                               | 31N                | A19N                         | Direct match in EEA
 Airbus A319 (Sharklets)                      | 31B                | A319                         | Supported via winglet/sharklet correction factor
 Airbus A320                                  | 320                | A320                         | Direct match in EEA
 Airbus A320neo                               | 32N                | A20N                         | Direct match in EEA
@@ -1029,10 +1039,10 @@ Airbus A321 (Sharklets)                      | 32B                | A321        
 Airbus A330                                  | 330                | A332                         | Mapped to least efficient in family
 Airbus A330-200                              | 332                | A332                         | Direct match in EEA
 Airbus A330-300                              | 333                | A333                         | Direct match in EEA
-Airbus A330-800neo                           | 338                | A332                         | Mapped onto older model
+Airbus A330-800neo                           | 338                | A338                         | Direct match in EEA
 Airbus A330-900neo                           | 339                | A339                         | Direct match in EEA
 Airbus A340                                  | 340                | A345                         | Mapped to least efficient in family
-Airbus A340-200                              | 342                | A345                         | Mapped to least efficient in family
+Airbus A340-200                              | 342                | A342                         | Direct match in EEA
 Airbus A340-300                              | 343                | A343                         | Direct match in EEA
 Airbus A340-500                              | 345                | A345                         | Direct match in EEA
 Airbus A340-600                              | 346                | A346                         | Direct match in EEA
@@ -1078,15 +1088,15 @@ Boeing 737-800 (Scimitar Winglets)           | 7S8                | B738        
 Boeing 737-800 (Winglets)                    | 73H                | B738                         | Supported via winglet/sharklet correction factor
 Boeing 737-900                               | 739                | B739                         | Direct match in EEA
 Boeing 737-900 (Winglets)                    | 73J                | B739                         | Supported via winglet/sharklet correction factor
-Boeing 737MAX 7                              | 7M7                | B734                         | Mapped onto older model
+Boeing 737MAX 7                              | 7M7                | B38M                         | Mapped to least efficient in family
 Boeing 737MAX 8                              | 7M8                | B38M                         | Direct match in EEA
 Boeing 737MAX 9                              | 7M9                | B39M                         | Direct match in EEA
-Boeing 737MAX 10                             | 7M1                | B734                         | Mapped onto older model
+Boeing 737MAX 10                             | 7M1                | B39M                         | Mapped onto older model
 Boeing 747-300/747-100/200 SUD               | 743                | B744                         | Mapped to least efficient in family
 Boeing 747                                   | 747                | B744                         | Mapped to least efficient in family
 Boeing 747-400                               | 744                | B744                         | Direct match in EEA
 Boeing 747-400                               | 74E                | B744                         | Direct match in EEA
-Boeing 747-8                                 | 74H                | B744                         | Mapped onto older model
+Boeing 747-8                                 | 74H                | B748                         | Direct match in EEA
 Boeing 757                                   | 757                | B753                         | Mapped to least efficient in family
 Boeing 757-200                               | 752                | B752                         | Direct match in EEA
 Boeing 757-200 (Winglets)                    | 75W                | B752                         | Supported via winglet/sharklet correction factor
@@ -1099,7 +1109,7 @@ Boeing 767-300 (Winglets)                    | 76W                | B763        
 Boeing 767-400                               | 764                | B764                         | Direct match in EEA
 Boeing 777                                   | 777                | B773                         | Mapped to least efficient in family
 Boeing 777-200/200ER                         | 772                | B772                         | Direct match in EEA
-Boeing 777-200LR                             | 77L                | B772                         | Mapped onto newer model
+Boeing 777-200LR                             | 77L                | B77L                         | Direct match in EEA
 Boeing 777-300                               | 773                | B773                         | Direct match in EEA
 Boeing 777-300ER                             | 77W                | B77W                         | Direct match in EEA
 Boeing 787                                   | 787                | B789                         | Mapped to least efficient in family
@@ -1125,7 +1135,7 @@ Canadair Regional Jet 100                    | CR1                | CRJ1        
 Canadair Regional Jet 200                    | CR2                | CRJ2                         | Direct match in EEA
 Canadair Regional Jet 700                    | CR7                | CRJ7                         | Direct match in EEA
 Canadair Regional Jet 900                    | CR9                | CRJ9                         | Direct match in EEA
-Canadair Regional Jet 1000                   | CRK                | CRJ9                         | Mapped to least efficient in family
+Canadair Regional Jet 1000                   | CRK                | CRJX                         | Direct match in EEA
 Cessna 208B Caravan                          | CNF                | C208                         | Direct match in EEA
 Cessna Citation                              | CNJ                | C500                         | Direct match in EEA
 Cessna Light Aircraft.                       | CNA                | C208                         | Direct match in EEA
